@@ -1,3 +1,3 @@
-# Alph Events
+# Alpha Events
 
 Event search platform
