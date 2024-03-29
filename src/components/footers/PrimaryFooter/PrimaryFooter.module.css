@@ -6,7 +6,11 @@
     font-size: 0.9rem;
     background-color: skyblue;
     padding-inline: 0.8rem;
-    margin-top: 82.4vh;
+    /* margin-top: 82.4vh; */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
 
 .container a {
