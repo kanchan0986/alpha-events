@@ -1,5 +1,7 @@
 .container {
     padding-inline: 1rem;
+    padding-bottom: 1rem;
+    min-height: 77.5vh;
 }
 .container h2 {
     text-align: center;
@@ -18,6 +20,10 @@
 .event {
     background: rgb(229, 225, 225);
     position: relative;
+}
+
+.event:not(:last-child) {
+    margin-bottom: 1rem;
 }
 
 .event a {

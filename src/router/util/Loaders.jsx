@@ -5,3 +5,12 @@ export const loadEvents = async () => {
     }
     return response
 }
+
+export const loadEvent = async ({ params }) => {
+    const id = params.id
+    const response = await fetch(`http://localhost:8080/events/${id}`)
+    if(!response.ok){
+        // 
+    }
+    return response
+}

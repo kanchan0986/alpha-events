@@ -1,0 +1,60 @@
+.container {
+    padding-inline: 5rem;
+    padding-bottom: 2rem;
+    min-height: 77.5vh;
+}
+
+.container h2 {
+    text-align: center;
+}
+
+.sub-container {
+    font-size: 1.2rem;
+}
+
+.sub-container:not(:last-of-type) {
+    margin-bottom: 1.5rem;
+}
+
+.title-box, .image-box, .date-box, .desc-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.title-box label, .image-box label, .date-box label, .desc-box label {
+    margin-bottom: 0.6rem;
+}
+
+.title-box input, .image-box input, .date-box input, .desc-box textarea {
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0.2rem;
+}
+
+.btn-box {
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+}
+
+.btn-box button {
+    padding: 0.8rem;
+    width: 10rem;
+    background: steelblue;
+    color: white;
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-box button:hover, .btn-box button:active {
+    background: skyblue;
+    color: black;
+}
+
+.btn-box button:not(:last-of-type) {
+    margin-right: 1rem;
+}
