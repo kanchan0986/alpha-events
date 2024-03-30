@@ -1,11 +1,16 @@
 import React from 'react'
-import { Link, useRouteLoaderData,  } from 'react-router-dom'
+import { Link, useRouteLoaderData, useSubmit,  } from 'react-router-dom'
 import style from './Event.module.css'
 
 export default function Event() {
 
     const eventData = useRouteLoaderData('event')
+    const submit = useSubmit()
     const event = eventData.event
+
+    const deleteHandler = () => { 
+      submit(null, {method: 'DELETE'})
+     }
 
   return (
     <section className={style.container}>
@@ -21,7 +26,7 @@ export default function Event() {
       </div>
       <div className={`${style['sub-container']} ${style['btn-box']}`}>
         <Link to='..'>Back</Link>
-        <a >Delete</a>
+        <a onClick={deleteHandler}>Delete</a>
         <Link to='edit'>Edit</Link>
       </div>
     </section>

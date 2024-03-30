@@ -6,7 +6,7 @@ export default function NewEvent() {
   return (
     <section className={style.container}>
       <h2>New Event</h2>
-      <EventForm />
+      <EventForm method='POST' />
     </section>
   )
 }

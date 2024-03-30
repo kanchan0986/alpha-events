@@ -1,9 +1,10 @@
 import React from 'react'
+import { Form, Link } from 'react-router-dom'
 import style from './EventForm.module.css'
 
-export default function EventForm({existingEvent}) {
+export default function EventForm({existingEvent, method}) {
   return (
-    <form className={style.container}>
+    <Form method={method} className={style.container}>
       <div className={`${style['sub-container']} ${style['title-box']}`}>
         <label htmlFor="title">Title</label>
         <input type="text" name="title" id='title' placeholder='Enter Event Title' defaultValue={existingEvent ? existingEvent.title : null} required />
@@ -21,10 +22,10 @@ export default function EventForm({existingEvent}) {
         <textarea name="description" id='description' cols="30" rows="10" placeholder='Enter Event Description' defaultValue={existingEvent ? existingEvent.description : null} required></textarea>
       </div>
       <div className={`${style['sub-container']} ${style['btn-box']}`}>
-        <button type="button">Back</button>
+        <Link to='..'>Back</Link>
         <button type="reset">Reset</button>
         <button type="submit">Submit</button>
       </div>
-    </form>
+    </Form>
   )
 }

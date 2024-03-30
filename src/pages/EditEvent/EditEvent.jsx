@@ -11,7 +11,7 @@ export default function EditEvent() {
   return (
     <section className={style.container}>
       <h2>Edit {event.title}</h2>
-      <EventForm existingEvent={event} />
+      <EventForm existingEvent={event} method='patch' />
     </section>
   )
 }

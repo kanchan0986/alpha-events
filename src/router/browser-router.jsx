@@ -10,6 +10,7 @@ import EventsLayout from '../layouts/EventsLayout'
 import NewEvent from '../pages/NewEvent/NewEvent'
 import { loadEvent, loadEvents } from './util/Loaders'
 import EditEvent from '../pages/EditEvent/EditEvent'
+import { deleteEvent, modifyEventAction } from './util/Actions'
 
 
 const browserRouter = createBrowserRouter([
@@ -17,10 +18,10 @@ const browserRouter = createBrowserRouter([
         {index: true, element:<Home />},
         {path: 'events', element:<EventsLayout />, children: [
             {index: true, element: <Events />, loader: loadEvents},
-            {path: 'new', element: <NewEvent />},
-            {path: ':id', id: 'event', loader: loadEvent, children: [
-                {index: true, element: <Event />},
-                {path: 'edit', element: <EditEvent />}
+            {path: 'new', element: <NewEvent />, action: modifyEventAction},
+            {path: ':id', id: 'event', loader: loadEvent, action: deleteEvent, children: [
+                {index: true, element: <Event />, action: deleteEvent},
+                {path: 'edit', element: <EditEvent />, action: modifyEventAction}
             ]},
         ]},
         {path: 'posts', element:<Posts />},

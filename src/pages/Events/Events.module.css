@@ -19,7 +19,6 @@
 
 .event {
     background: rgb(229, 225, 225);
-    position: relative;
 }
 
 .event:not(:last-child) {
@@ -31,18 +30,13 @@
     text-decoration: none;
 }
 
-.button {
-    position: absolute;
-    bottom: 10%;
-    left: 21%;
-}
-
 .event a img {
     width: 20%;
 }
 
 .event-desc {
     padding-inline: 1rem;
+    padding-bottom: 1rem;
 }
 
 .event-desc h4 {

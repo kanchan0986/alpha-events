@@ -37,7 +37,7 @@
     padding-top: 1rem;
 }
 
-.btn-box button {
+.btn-box * {
     padding: 0.8rem;
     width: 10rem;
     background: steelblue;
@@ -48,13 +48,10 @@
     text-align: center;
     border: none;
     cursor: pointer;
+    margin-inline: 0.5rem;
 }
 
-.btn-box button:hover, .btn-box button:active {
+.btn-box *:hover, .btn-box *:active {
     background: skyblue;
     color: black;
-}
-
-.btn-box button:not(:last-of-type) {
-    margin-right: 1rem;
 }
