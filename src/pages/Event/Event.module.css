@@ -7,14 +7,10 @@
     text-align: center;
 }
 
-.sub-container {
-
-}
-
 .image-box {
-    padding-inline: 25rem;
     display: flex;
     justify-content: center;
+    height: 50vh;
 }
 
 .date-box {

@@ -7,10 +7,6 @@
     text-align: center;
 }
 
-.sub-container {
-    
-}
-
 .events-list {
     list-style: none;
     margin: 0;
@@ -51,4 +47,25 @@
 
 .event:hover {
     background: rgb(199, 198, 198);
+}
+
+.event-desc button {
+    padding: 0.5rem;
+    width: 5rem;
+    background: steelblue;
+    color: white;
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: none;
+    text-align: center;
+    border: 0;
+    cursor: pointer;
+}
+
+.event-desc button:hover, .event-desc button:active {
+    background: #615e5e;
+}
+
+.event-desc button:not(:last-of-type) {
+    margin-right: 1rem;
 }
