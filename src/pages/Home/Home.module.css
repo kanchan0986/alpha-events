@@ -1,0 +1,117 @@
+.container {
+    padding-inline: 1rem;
+    padding-bottom: 1rem;
+    min-height: 77.5vh;
+}
+
+.container h2 {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.sub-container h3 {
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+.sub-container {
+    background: cornsilk;
+    padding: 0.5rem 2rem 2rem 2rem;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.sub-container:not(:last-of-type) {
+    margin-bottom: 1rem;
+}
+
+.events-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.event {
+    background: rgb(229, 225, 225);
+}
+
+.event:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.event a {
+    display: flex;
+    text-decoration: none;
+}
+
+.event a img {
+    width: 20%;
+}
+
+.event-desc {
+    padding-inline: 1rem;
+    padding-bottom: 1rem;
+}
+
+.event-desc h4 {
+    font-size: 1.2rem;
+    text-transform: capitalize;
+}
+
+.event-desc span {
+    font-size: 0.9rem;
+}
+
+
+.event:hover {
+    background: rgb(199, 198, 198);
+}
+
+.event-desc button {
+    padding: 0.5rem;
+    width: 5rem;
+    background: steelblue;
+    color: white;
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: none;
+    text-align: center;
+    border: 0;
+    cursor: pointer;
+}
+
+.event-desc button:hover, .event-desc button:active {
+    background: #615e5e;
+}
+
+.event-desc button:not(:last-of-type) {
+    margin-right: 1rem;
+}
+
+.btn-box {
+    display: flex;
+    justify-content: center;
+    padding-top: 1.5rem;
+}
+
+.btn-box a {
+    padding: 0.8rem;
+    width: 10rem;
+    background: steelblue;
+    color: white;
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+.btn-box a:hover, .btn-box a:active {
+    background: skyblue;
+    color: black;
+}
+
+.btn-box a:not(:last-of-type) {
+    margin-right: 1rem;
+}
+
+

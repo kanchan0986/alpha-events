@@ -15,7 +15,7 @@ import { deleteEvent, modifyEventAction } from './util/Actions'
 
 const browserRouter = createBrowserRouter([
     {path: '/', element:<RootLayout />, children: [
-        {index: true, element:<Home />},
+        {index: true, element:<Home />, loader: loadEvents, action: deleteEvent},
         {path: 'events', element:<EventsLayout />, children: [
             {index: true, element: <Events />, loader: loadEvents},
             {path: 'new', element: <NewEvent />, action: modifyEventAction},
