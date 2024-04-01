@@ -14,3 +14,26 @@ export const loadEvent = async ({ params }) => {
     }
     return response
 }
+
+export const loadHomepage = async () => {
+
+    // fetch Events
+
+    const eventsResponse = await fetch('http://localhost:8080/events')
+    if(!eventsResponse.ok){
+        // 
+    }
+    const eventsData = await eventsResponse.json()
+
+    // fetch Posts
+
+    const postsResponse = await fetch('https://jsonplaceholder.typicode.com/posts')
+    if(!postsResponse.ok){
+        // 
+    }
+    const postsData = await postsResponse.json()
+
+    const response = { eventsData, postsData}
+
+    return response
+}

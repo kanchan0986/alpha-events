@@ -8,14 +8,14 @@ import Login from '../pages/Login/Login'
 import RootLayout from '../layouts/RootLayout'
 import EventsLayout from '../layouts/EventsLayout'
 import NewEvent from '../pages/NewEvent/NewEvent'
-import { loadEvent, loadEvents } from './util/Loaders'
+import { loadEvent, loadEvents, loadHomepage } from './util/Loaders'
 import EditEvent from '../pages/EditEvent/EditEvent'
 import { deleteEvent, modifyEventAction } from './util/Actions'
 
 
 const browserRouter = createBrowserRouter([
     {path: '/', element:<RootLayout />, children: [
-        {index: true, element:<Home />, loader: loadEvents, action: deleteEvent},
+        {index: true, element:<Home />, loader: loadHomepage, action: deleteEvent},
         {path: 'events', element:<EventsLayout />, children: [
             {index: true, element: <Events />, loader: loadEvents},
             {path: 'new', element: <NewEvent />, action: modifyEventAction},
