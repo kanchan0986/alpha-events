@@ -1,0 +1,72 @@
+.container {
+    padding-inline: 1rem;
+    padding-bottom: 1rem;
+    min-height: 77.5vh;
+}
+.container h2 {
+    text-align: center;
+}
+
+.posts-container {
+    padding-inline: 1rem;
+}
+
+.posts-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 2rem;
+}
+
+.post {
+    display: flex;
+    background: rgb(229, 225, 225);
+    margin-bottom: 2rem;
+}
+
+.post a {
+    display: flex;
+    text-decoration: none;
+}
+
+.post-desc {
+    padding-inline: 1rem;
+    padding-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.post-desc h4 {
+    font-size: 1.2rem;
+    text-transform: capitalize;
+}
+
+.post-desc span {
+    font-size: 0.9rem;
+}
+
+
+.post:hover {
+    background: rgb(199, 198, 198);
+}
+
+.post-desc button {
+    padding: 0.5rem;
+    width: 5rem;
+    background: steelblue;
+    color: white;
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: none;
+    text-align: center;
+    border: 0;
+    cursor: pointer;
+    align-self: center;
+}
+
+.post-desc button:hover, .post-desc button:active {
+    background: #615e5e;
+}

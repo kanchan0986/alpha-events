@@ -47,3 +47,50 @@ export const deleteEvent = async ({params}) => {
     console.log(response)
     return redirect('/events')
 }
+
+export const modifyPostAction = async ({request, params}) => {
+
+    const formData = await request.formData()
+
+    const method = request.method
+
+    let url = 'https://jsonplaceholder.typicode.com/posts/'
+
+    const post = {
+        title: formData.get('title'),
+        body: formData.get('body'),
+        userId: formData.get('userId')
+    }
+
+    if(method === 'PUT'){
+        url = url + params.id
+    }
+
+    const response = await fetch(url, {
+        method,
+        body: JSON.stringify(post),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+        }
+    })
+
+    if(!response.ok){
+        // 
+    }
+
+    console.log(response)
+
+    return redirect('/posts')
+}
+
+export const deletePost = async ({params}) => {
+    const id = params.id
+    const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+        method: 'DELETE'
+    })
+    if(!response.ok){
+        // 
+    }
+    console.log(response)
+    return redirect('/posts')
+}

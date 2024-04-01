@@ -1,11 +1,11 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
 import SecondaryHeader from '../components/headers/SecondaryHeader/SecondaryHeader'
+import { Outlet } from 'react-router-dom'
 
-export default function EventsLayout() {
+export default function PostsLayout() {
   return (
     <>
-        <SecondaryHeader type='event' />
+        <SecondaryHeader />
         <Outlet />
     </>
   )

@@ -5,7 +5,6 @@ import { useLoaderData, useSubmit, Link } from 'react-router-dom'
 export default function Home() {
 
   const responseData = useLoaderData()
-  console.log(responseData)
 
   const submit = useSubmit()
 
@@ -16,7 +15,7 @@ export default function Home() {
 
   const postDeleteHandler = (e, postId) => {
       e.preventDefault()
-      // submit(null, {method: 'DELETE', action: `/events/${eventId}`})
+      submit(null, {method: 'DELETE', action: `/posts/${postId}`})
   }
 
 
@@ -40,7 +39,7 @@ export default function Home() {
   const postsList = responseData.postsData.map(post => {
     return (
       <li className={style.post} key={post.id}>
-        <Link to=''>
+        <Link to={`posts/${post.id}`}>
           <div className={style['post-desc']}>
             <div>
               <h4>{post.title}</h4>
@@ -72,8 +71,8 @@ export default function Home() {
           <ul className={style['posts-list']}>{postsList}</ul>
         </div>
         <div className={style['btn-box']}>
-          <Link to=''>Check All Posts</Link>
-          <Link to=''>Add New Post</Link>
+          <Link to='posts'>Check All Posts</Link>
+          <Link to='posts/new'>Add New Post</Link>
         </div>
       </div>
       <div className={style['sub-container']}>
