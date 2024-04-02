@@ -1,5 +1,6 @@
 import React from 'react'
 import style from './PrimaryHeader.module.css'
+import RegisterForm from '../../RegisterForm/RegisterForm'
 import { Link, NavLink } from 'react-router-dom'
 
 export default function PrimaryHeader() {
@@ -21,10 +22,7 @@ export default function PrimaryHeader() {
       </div>
       <div className={`${style['sub-container']} ${style.last}`}>
         <NavLink to='login' className={({isActive}) => isActive ? style.active : ''}>Login</NavLink>
-        <form className={style['newsletter-form']}>
-          <input type="email" name="newsletter" id="newsletter" />
-          <button>Register</button>
-        </form>
+        <RegisterForm />
       </div>
     </nav>
   )

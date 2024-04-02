@@ -1,0 +1,13 @@
+.newsletter-form input {
+    width: 15vw;
+    padding: 0.5rem;
+    margin-left: 2rem;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.newsletter-form button {
+    padding: 0.5rem;
+    font-family: inherit;
+    font-size: inherit;
+}

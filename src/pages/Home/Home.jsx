@@ -1,5 +1,6 @@
 import React from 'react'
 import style from './Home.module.css'
+import RegisterForm from '../../components/RegisterForm/RegisterForm'
 import { useLoaderData, useSubmit, Link } from 'react-router-dom'
 
 export default function Home() {
@@ -75,8 +76,9 @@ export default function Home() {
           <Link to='posts/new'>Add New Post</Link>
         </div>
       </div>
-      <div className={style['sub-container']}>
+      <div className={`${style['sub-container']} ${style['form-container']}`}>
         <h3>Newsletter</h3>
+        <RegisterForm />
       </div>
     </section>
   )

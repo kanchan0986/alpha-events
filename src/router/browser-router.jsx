@@ -14,12 +14,12 @@ import PostsLayout from '../layouts/PostsLayout'
 import NewEvent from '../pages/NewEvent/NewEvent'
 import { loadEvent, loadEvents, loadHomepage, loadPost, loadPosts } from './util/Loaders'
 import EditEvent from '../pages/EditEvent/EditEvent'
-import { deleteEvent, deletePost, modifyEventAction, modifyPostAction } from './util/Actions'
+import { deleteEvent, deletePost, modifyEventAction, modifyPostAction, registerAction } from './util/Actions'
 
 
 const browserRouter = createBrowserRouter([
-    {path: '/', element:<RootLayout />, children: [
-        {index: true, element:<Home />, loader: loadHomepage},
+    {path: '/', element:<RootLayout />, action: registerAction, children: [
+        {index: true, element:<Home />, loader: loadHomepage, action: registerAction},
         {path: 'events', element:<EventsLayout />, children: [
             {index: true, element: <Events />, loader: loadEvents},
             {path: 'new', element: <NewEvent />, action: modifyEventAction},
@@ -36,7 +36,7 @@ const browserRouter = createBrowserRouter([
                 {path: 'edit', element: <EditPost />, action: modifyPostAction},
             ]}
         ]},
-        {path: 'newsletter', element:<Newsletter />},
+        {path: 'newsletter', element:<Newsletter />, action: registerAction},
         {path: 'login', element:<Login />},
     ]},
 ])

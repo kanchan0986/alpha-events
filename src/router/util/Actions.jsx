@@ -94,3 +94,11 @@ export const deletePost = async ({params}) => {
     console.log(response)
     return redirect('/posts')
 }
+
+export const registerAction = async ({request}) => {
+    const formData = await request.formData()
+    const newsletter = formData.get('newsletter')
+    // Store the newsletter data
+    console.log(newsletter)
+    return redirect('/')
+}
