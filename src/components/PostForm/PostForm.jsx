@@ -11,7 +11,7 @@ export default function PostForm({existingPost, method}) {
       </div>
       <div className={`${style['sub-container']} ${style['date-box']}`}>
         <label htmlFor="userId">User ID</label>
-        <input type="userId" name="userId" id='userId' placeholder='Enter User ID' defaultValue={existingPost ? existingPost.userId : null} required />
+        <input type="number" name="userId" id='userId' min='1' placeholder='Enter User ID' defaultValue={existingPost ? existingPost.userId : null} required />
       </div>
       <div className={`${style['sub-container']} ${style['desc-box']}`}>
         <label htmlFor="body">Description</label>
