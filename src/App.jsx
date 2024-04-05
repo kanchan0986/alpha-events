@@ -27,22 +27,27 @@ export default function App() {
     setIsModalVisible: modalVisibility.setIsModalVisible,
     setMessage: successMessage.setMessage,
   }
+
+  const getter = {
+    isModalVisible: modalVisibility.isModalVisible,
+    message: successMessage.message,
+  }
   
   const router = createBrowserRouter([
-      {path: '/', element:<RootLayout />, children: [
-          {index: true, element:<Home />, loader: loadHomepage},
+      {path: '/', element:<RootLayout />, action: registerAction, children: [
+          {index: true, element:<Home />, loader: loadHomepage, action: registerAction},
           {path: 'events', element:<EventsLayout />, children: [
               {index: true, element: <Events />, loader: loadEvents},
-              {path: 'new', element: <NewEvent />, action: modifyEventAction(setter)},
-              {path: ':id', id: 'event', loader: loadEvent, action: deleteEvent(setter), children: [
-                  {index: true, element: <Event />, action: deleteEvent(setter)},
-                  {path: 'edit', element: <EditEvent />, action: modifyEventAction(setter)}
+              {path: 'new', element: <NewEvent />, action: modifyEventAction},
+              {path: ':id', id: 'event', loader: loadEvent, action: deleteEvent, children: [
+                  {index: true, element: <Event />, action: deleteEvent},
+                  {path: 'edit', element: <EditEvent />, action: modifyEventAction}
               ]},
           ]},
           {path: 'posts', element: <PostsLayout />, children: [
               {index: true, element: <Posts />, loader: loadPosts},
               {path: 'new', element: <NewPost />, action: modifyPostAction(setter)},
-              {path: ':id', id: 'post',  loader: loadPost, children: [
+              {path: ':id', id: 'post',  loader: loadPost, action: deletePost(setter), children: [
                   {index: true, element: <Post />, action: deletePost(setter)},
                   {path: 'edit', element: <EditPost />, action: modifyPostAction(setter)},
               ]}
