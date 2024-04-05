@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom"
 
-export const modifyEventAction = async ({request, params}) => {
+export const modifyEventAction = ({setIsModalVisible, setMessage}) => async ({request, params}) => {
 
     const formData = await request.formData()
 
@@ -32,10 +32,12 @@ export const modifyEventAction = async ({request, params}) => {
     }
 
     console.log(response)
+    setIsModalVisible(true)
+    setMessage(`Event ${method === 'PATCH' ? 'Edited' : 'Created'}!`)
     return redirect('/events')
 }
 
-export const deleteEvent = async ({params}) => {
+export const deleteEvent = ({setIsModalVisible, setMessage}) => async ({params}) => {
     const id = params.id
     const response = await fetch(`http://localhost:8080/events/${id}`, {
         method: 'DELETE'
@@ -44,6 +46,8 @@ export const deleteEvent = async ({params}) => {
         // 
     }
     console.log(response)
+    setIsModalVisible(true)
+    setMessage('Event Deleted!')
     return redirect('/events')
 }
 

@@ -4,7 +4,7 @@ import Context from './context'
 export default function ProvideContext({children}) {
    
     const [isModalVisible, setIsModalVisible] = useState(false)
-    const [successMessage, setSuccessMessage] = useState('')
+    const [successsMessage, setSuccesssMessage] = useState('')
     
 
     const initialValue = {
@@ -14,8 +14,8 @@ export default function ProvideContext({children}) {
             setIsModalVisible,
         },
         successMessage: {
-            message: successMessage,
-            setMessage: setSuccessMessage,
+            message: successsMessage,
+            setMessage: setSuccesssMessage,
         },
 
     }

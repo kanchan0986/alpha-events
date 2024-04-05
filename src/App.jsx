@@ -34,14 +34,14 @@ export default function App() {
   }
   
   const router = createBrowserRouter([
-      {path: '/', element:<RootLayout />, action: registerAction, children: [
-          {index: true, element:<Home />, loader: loadHomepage, action: registerAction},
+      {path: '/', element:<RootLayout />, children: [
+          {index: true, element:<Home />, loader: loadHomepage},
           {path: 'events', element:<EventsLayout />, children: [
               {index: true, element: <Events />, loader: loadEvents},
-              {path: 'new', element: <NewEvent />, action: modifyEventAction},
-              {path: ':id', id: 'event', loader: loadEvent, action: deleteEvent, children: [
-                  {index: true, element: <Event />, action: deleteEvent},
-                  {path: 'edit', element: <EditEvent />, action: modifyEventAction}
+              {path: 'new', element: <NewEvent />, action: modifyEventAction(setter)},
+              {path: ':id', id: 'event', loader: loadEvent, action: deleteEvent(setter), children: [
+                  {index: true, element: <Event />, action: deleteEvent(setter)},
+                  {path: 'edit', element: <EditEvent />, action: modifyEventAction(setter)}
               ]},
           ]},
           {path: 'posts', element: <PostsLayout />, children: [

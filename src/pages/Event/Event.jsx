@@ -1,15 +1,17 @@
 import React from 'react'
-import { Link, useRouteLoaderData, useSubmit,  } from 'react-router-dom'
+import { Link, useRouteLoaderData, useSubmit, useNavigate } from 'react-router-dom'
 import style from './Event.module.css'
 
 export default function Event() {
 
     const eventData = useRouteLoaderData('event')
     const submit = useSubmit()
+    const navigate = useNavigate()
     const event = eventData.event
 
     const deleteHandler = () => { 
       submit(null, {method: 'DELETE'})
+      navigate('/events')
      }
 
   return (
