@@ -21,28 +21,33 @@ import useCustomContext from './hooks/useCustomContext'
 
 export default function App() {  
 
-  const { modalVisibility } = useCustomContext()
+  const { modalVisibility, successMessage } = useCustomContext()
+
+  const setter = {
+    setIsModalVisible: modalVisibility.setIsModalVisible,
+    setMessage: successMessage.setMessage,
+  }
   
   const router = createBrowserRouter([
-      {path: '/', element:<RootLayout />, action: registerAction, children: [
-          {index: true, element:<Home />, loader: loadHomepage, action: registerAction},
+      {path: '/', element:<RootLayout />, children: [
+          {index: true, element:<Home />, loader: loadHomepage},
           {path: 'events', element:<EventsLayout />, children: [
               {index: true, element: <Events />, loader: loadEvents},
-              {path: 'new', element: <NewEvent />, action: modifyEventAction},
-              {path: ':id', id: 'event', loader: loadEvent, action: deleteEvent, children: [
-                  {index: true, element: <Event />, action: deleteEvent},
-                  {path: 'edit', element: <EditEvent />, action: modifyEventAction}
+              {path: 'new', element: <NewEvent />, action: modifyEventAction(setter)},
+              {path: ':id', id: 'event', loader: loadEvent, action: deleteEvent(setter), children: [
+                  {index: true, element: <Event />, action: deleteEvent(setter)},
+                  {path: 'edit', element: <EditEvent />, action: modifyEventAction(setter)}
               ]},
           ]},
           {path: 'posts', element: <PostsLayout />, children: [
               {index: true, element: <Posts />, loader: loadPosts},
-              {path: 'new', element: <NewPost />, action: modifyPostAction},
-              {path: ':id', id: 'post',  loader: loadPost, action: deletePost, children: [
-                  {index: true, element: <Post />, action: deletePost},
-                  {path: 'edit', element: <EditPost />, action: modifyPostAction},
+              {path: 'new', element: <NewPost />, action: modifyPostAction(setter)},
+              {path: ':id', id: 'post',  loader: loadPost, children: [
+                  {index: true, element: <Post />, action: deletePost(setter)},
+                  {path: 'edit', element: <EditPost />, action: modifyPostAction(setter)},
               ]}
           ]},
-          {path: 'newsletter', element:<Newsletter />, action: registerAction(modalVisibility.setIsModalVisible)},
+          {path: 'newsletter', element:<Newsletter />, action: registerAction(setter)},
           {path: 'login', element:<Login />},
       ]},
   ])

@@ -4,6 +4,7 @@ import Context from './context'
 export default function ProvideContext({children}) {
    
     const [isModalVisible, setIsModalVisible] = useState(false)
+    const [successMessage, setSuccessMessage] = useState('')
     
 
     const initialValue = {
@@ -11,6 +12,10 @@ export default function ProvideContext({children}) {
         modalVisibility: {
             isModalVisible,
             setIsModalVisible,
+        },
+        successMessage: {
+            message: successMessage,
+            setMessage: setSuccessMessage,
         },
 
     }

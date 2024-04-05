@@ -6,6 +6,10 @@ const Context = createContext({
         isModalVisible: false,
         setIsModalVisible: () => {},
     },
+    successMessage: {
+        message: '',
+        setMessage: () => {},
+    },
     
 })
 
