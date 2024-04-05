@@ -95,10 +95,13 @@ export const deletePost = async ({params}) => {
     return redirect('/posts')
 }
 
-export const registerAction = async ({request}) => {
+export const registerAction = (setIsModalVisible) => async ({request}) => {
     const formData = await request.formData()
     const newsletter = formData.get('newsletter')
-    // Store the newsletter data
-    console.log(newsletter)
-    return redirect('/')
-}
+    if(newsletter.trim() !== ''){
+        console.log(newsletter)
+        // Store the newsletter data
+        setIsModalVisible(true)
+    }
+    return null
+}                    // Note** This is a curried function

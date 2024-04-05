@@ -7,7 +7,7 @@ export default function RegisterForm() {
   const fetcher = useFetcher()
 
   return (
-    <fetcher.Form method='POST' className={style['newsletter-form']}>
+    <fetcher.Form method='POST' action='/newsletter' className={style['newsletter-form']}>
         <input type="email" name="newsletter"/>
         <button>Register</button>
     </fetcher.Form>

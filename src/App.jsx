@@ -16,9 +16,12 @@ import EventsLayout from './layouts/EventsLayout'
 import PostsLayout from './layouts/PostsLayout'
 import { loadEvent, loadEvents, loadHomepage, loadPost, loadPosts } from './util/Loaders'
 import { deleteEvent, deletePost, modifyEventAction, modifyPostAction, registerAction } from './util/Actions'
+import useCustomContext from './hooks/useCustomContext'
 
 
 export default function App() {  
+
+  const { modalVisibility } = useCustomContext()
   
   const router = createBrowserRouter([
       {path: '/', element:<RootLayout />, action: registerAction, children: [
@@ -39,7 +42,7 @@ export default function App() {
                   {path: 'edit', element: <EditPost />, action: modifyPostAction},
               ]}
           ]},
-          {path: 'newsletter', element:<Newsletter />, action: registerAction},
+          {path: 'newsletter', element:<Newsletter />, action: registerAction(modalVisibility.setIsModalVisible)},
           {path: 'login', element:<Login />},
       ]},
   ])
@@ -49,5 +52,5 @@ export default function App() {
   return (
     <RouterProvider router={router} />
   )
-  
+
 }
