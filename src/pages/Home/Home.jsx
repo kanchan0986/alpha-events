@@ -11,12 +11,12 @@ export default function Home() {
 
   const eventDeleteHandler = (e, eventId) => {
       e.preventDefault()
-      submit(null, {method: 'DELETE', action: `/events/${eventId}`})
+      submit({redirect: '/'}, {method: 'DELETE', action: `/events/${eventId}`})
   }
 
   const postDeleteHandler = (e, postId) => {
       e.preventDefault()
-      submit(null, {method: 'DELETE', action: `/posts/${postId}`})
+      submit({redirect: '/'}, {method: 'DELETE', action: `/posts/${postId}`})
   }
 
 

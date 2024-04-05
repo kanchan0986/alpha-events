@@ -37,8 +37,10 @@ export const modifyEventAction = ({setIsModalVisible, setMessage}) => async ({re
     return redirect('/events')
 }
 
-export const deleteEvent = ({setIsModalVisible, setMessage}) => async ({params}) => {
+export const deleteEvent = ({setIsModalVisible, setMessage}) => async ({request, params}) => {
     const id = params.id
+    const formData = await request.formData()
+    const redirectionPath = formData.get('redirect')
     const response = await fetch(`http://localhost:8080/events/${id}`, {
         method: 'DELETE'
     })
@@ -48,7 +50,11 @@ export const deleteEvent = ({setIsModalVisible, setMessage}) => async ({params})
     console.log(response)
     setIsModalVisible(true)
     setMessage('Event Deleted!')
-    return redirect('/events')
+    if(redirectionPath === '/'){
+        return redirect(redirectionPath)
+    }else{
+        return redirect('/events')
+    }
 }
 
 export const modifyPostAction = ({setIsModalVisible, setMessage}) => async ({request, params}) => {
@@ -87,8 +93,10 @@ export const modifyPostAction = ({setIsModalVisible, setMessage}) => async ({req
     return redirect('/posts')
 }
 
-export const deletePost = ({setIsModalVisible, setMessage}) => async ({params}) => {
+export const deletePost = ({setIsModalVisible, setMessage}) => async ({request, params}) => {
     const id = params.id
+    const formData = await request.formData()
+    const redirectionPath = formData.get('redirect')
     const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
         method: 'DELETE'
     })
@@ -98,7 +106,11 @@ export const deletePost = ({setIsModalVisible, setMessage}) => async ({params}) 
     console.log(response)
     setIsModalVisible(true)
     setMessage('Post Deleted!')
-    return redirect('/posts')
+    if(redirectionPath === '/'){
+        return redirect(redirectionPath)
+    }else{
+        return redirect('/posts')
+    }
 }
 
 export const registerAction = ({setIsModalVisible, setMessage}) => async ({request}) => {
