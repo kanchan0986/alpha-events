@@ -1,14 +1,18 @@
 import React from 'react'
 import style from './Post.module.css'
-import { useSubmit, Link, useRouteLoaderData } from 'react-router-dom'
+import useCustomContext from '../../hooks/useCustomContext'
+import { Link, useRouteLoaderData } from 'react-router-dom'
 
 export default function Post() {
 
     const post = useRouteLoaderData('post')
-    const submit = useSubmit()
 
-    const deleteHandler = () => { 
-      submit(null, {method: 'DELETE'})
+    const { consentModalVisibility, consentDetails } = useCustomContext()
+
+    const deleteHandler = (postId) => { 
+      consentModalVisibility.setIsModalVisible(true)
+      consentDetails.consentMessage.setMessage('Are you sure you to delete this post?')
+      consentDetails.consentValue.setValue(postId)
      }
 
   return (
@@ -19,7 +23,7 @@ export default function Post() {
       </div>
       <div className={`${style['sub-container']} ${style['btn-box']}`}>
         <Link to='..'>Back</Link>
-        <a onClick={deleteHandler}>Delete</a>
+        <a onClick={() =>deleteHandler(post.id)}>Delete</a>
         <Link to='edit'>Edit</Link>
       </div>
     </section>

@@ -5,11 +5,11 @@ import Portal from '../../Portal/Portal'
 
 export default function SuccessModal() {
 
-    const { modalVisibility, successMessage } = useCustomContext()
+    const { successModalVisibility, successMessage } = useCustomContext()
 
     const handleClose = () => { 
         successMessage.setMessage('')
-        modalVisibility.setIsModalVisible(false)
+        successModalVisibility.setIsModalVisible(false)
      }
 
   return (

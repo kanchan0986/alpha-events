@@ -3,20 +3,37 @@ import Context from './context'
 
 export default function ProvideContext({children}) {
    
-    const [isModalVisible, setIsModalVisible] = useState(false)
+    const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false)
+    const [isConsentModalVisible, setIsConsentModalVisible] = useState(false)
     const [successsMessage, setSuccesssMessage] = useState('')
+    const [consentMessage, setConsentMessage] = useState('')
+    const [consentValue, setConsentValue] = useState(null)
     
 
     const initialValue = {
 
-        modalVisibility: {
-            isModalVisible,
-            setIsModalVisible,
+        successModalVisibility: {
+            isModalVisible: isSuccessModalVisible,
+            setIsModalVisible: setIsSuccessModalVisible,
+        },
+        consentModalVisibility: {
+            isModalVisible: isConsentModalVisible,
+            setIsModalVisible: setIsConsentModalVisible,
         },
         successMessage: {
             message: successsMessage,
             setMessage: setSuccesssMessage,
         },
+        consentDetails: {
+          consentMessage: {
+              message: consentMessage,
+              setMessage: setConsentMessage,
+          },
+          consentValue: {
+              value: consentValue,
+              setValue: setConsentValue,
+          },
+      },
 
     }
 

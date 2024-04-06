@@ -21,16 +21,11 @@ import useCustomContext from './hooks/useCustomContext'
 
 export default function App() {  
 
-  const { modalVisibility, successMessage } = useCustomContext()
+  const { successModalVisibility, successMessage } = useCustomContext()
 
   const setter = {
-    setIsModalVisible: modalVisibility.setIsModalVisible,
-    setMessage: successMessage.setMessage,
-  }
-
-  const getter = {
-    isModalVisible: modalVisibility.isModalVisible,
-    message: successMessage.message,
+    setIsSuccessModalVisible: successModalVisibility.setIsModalVisible,
+    setSuccessMessage: successMessage.setMessage,
   }
   
   const router = createBrowserRouter([

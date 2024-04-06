@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom"
 
-export const modifyEventAction = ({setIsModalVisible, setMessage}) => async ({request, params}) => {
+export const modifyEventAction = ({setIsSuccessModalVisible, setSuccessMessage}) => async ({request, params}) => {
 
     const formData = await request.formData()
 
@@ -32,12 +32,12 @@ export const modifyEventAction = ({setIsModalVisible, setMessage}) => async ({re
     }
 
     console.log(response)
-    setIsModalVisible(true)
-    setMessage(`Event ${method === 'PATCH' ? 'Edited' : 'Created'}!`)
+    setIsSuccessModalVisible(true)
+    setSuccessMessage(`Event ${method === 'PATCH' ? 'Edited' : 'Created'}!`)
     return redirect('/events')
 }
 
-export const deleteEvent = ({setIsModalVisible, setMessage}) => async ({request, params}) => {
+export const deleteEvent = ({setIsSuccessModalVisible, setSuccessMessage}) => async ({request, params}) => {
     const id = params.id
     const formData = await request.formData()
     const redirectionPath = formData.get('redirect')
@@ -48,8 +48,8 @@ export const deleteEvent = ({setIsModalVisible, setMessage}) => async ({request,
         // 
     }
     console.log(response)
-    setIsModalVisible(true)
-    setMessage('Event Deleted!')
+    setIsSuccessModalVisible(true)
+    setSuccessMessage('Event Deleted!')
     if(redirectionPath === '/'){
         return redirect(redirectionPath)
     }else{
@@ -57,7 +57,7 @@ export const deleteEvent = ({setIsModalVisible, setMessage}) => async ({request,
     }
 }
 
-export const modifyPostAction = ({setIsModalVisible, setMessage}) => async ({request, params}) => {
+export const modifyPostAction = ({setIsSuccessModalVisible, setSuccessMessage}) => async ({request, params}) => {
 
     const formData = await request.formData()
 
@@ -88,12 +88,12 @@ export const modifyPostAction = ({setIsModalVisible, setMessage}) => async ({req
     }
 
     console.log(response)
-    setIsModalVisible(true)
-    setMessage(`Post ${method === 'PUT' ? 'Edited' : 'Created'}!`)
+    setIsSuccessModalVisible(true)
+    setSuccessMessage(`Post ${method === 'PUT' ? 'Edited' : 'Created'}!`)
     return redirect('/posts')
 }
 
-export const deletePost = ({setIsModalVisible, setMessage}) => async ({request, params}) => {
+export const deletePost = ({setIsSuccessModalVisible, setSuccessMessage}) => async ({request, params}) => {
     const id = params.id
     const formData = await request.formData()
     const redirectionPath = formData.get('redirect')
@@ -104,8 +104,8 @@ export const deletePost = ({setIsModalVisible, setMessage}) => async ({request, 
         // 
     }
     console.log(response)
-    setIsModalVisible(true)
-    setMessage('Post Deleted!')
+    setIsSuccessModalVisible(true)
+    setSuccessMessage('Post Deleted!')
     if(redirectionPath === '/'){
         return redirect(redirectionPath)
     }else{
@@ -113,14 +113,14 @@ export const deletePost = ({setIsModalVisible, setMessage}) => async ({request, 
     }
 }
 
-export const registerAction = ({setIsModalVisible, setMessage}) => async ({request}) => {
+export const registerAction = ({setIsSuccessModalVisible, setSuccessMessage}) => async ({request}) => {
     const formData = await request.formData()
     const newsletter = formData.get('newsletter')
     if(newsletter.trim() !== ''){
         console.log(newsletter)
         // Store the newsletter data
-        setIsModalVisible(true)
-        setMessage('Email Registered!')
+        setIsSuccessModalVisible(true)
+        setSuccessMessage('Email Registered!')
     }
     return null
 }                    // Note** This is a curried function

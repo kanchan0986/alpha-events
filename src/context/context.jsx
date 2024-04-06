@@ -2,7 +2,11 @@ import { createContext } from "react";
 
 const Context = createContext({
 
-    modalVisibility: {
+    successModalVisibility: {
+        isModalVisible: false,
+        setIsModalVisible: () => {},
+    },
+    consentModalVisibility: {
         isModalVisible: false,
         setIsModalVisible: () => {},
     },
@@ -10,6 +14,17 @@ const Context = createContext({
         message: '',
         setMessage: () => {},
     },
+    consentDetails: {
+        consentMessage: {
+            message: '',
+            setMessage: () => {},
+        },
+        consentValue: {
+            value: null,
+            setValue: () => {},
+        },
+    },
+
     
 })
 

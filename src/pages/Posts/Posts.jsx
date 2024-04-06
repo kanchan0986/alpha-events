@@ -1,16 +1,19 @@
 import React from 'react'
-import { useSubmit, useLoaderData, Link } from 'react-router-dom'
+import { useLoaderData, Link } from 'react-router-dom'
 import style from './Posts.module.css'
+import useCustomContext from '../../hooks/useCustomContext'
 
 export default function Posts() {
 
   const postsData = useLoaderData()
 
-  const submit = useSubmit()
+  const { consentModalVisibility, consentDetails } = useCustomContext()
 
   const deleteHandler = (e, postId) => {
     e.preventDefault()
-    submit(null, {method: 'DELETE', action: `/posts/${postId}`})
+    consentModalVisibility.setIsModalVisible(true)
+    consentDetails.consentMessage.setMessage('Are you sure you to delete this post?')
+    consentDetails.consentValue.setValue(postId)
  }
 
   const postsList = postsData.map(post => {

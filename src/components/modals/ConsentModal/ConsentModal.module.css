@@ -1,0 +1,38 @@
+.container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 30%;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+  }
+  
+
+  .container button {
+    padding: 0.4rem 0.2rem;
+    width: 6rem;
+    background: skyblue;
+    color: black;
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+}
+
+.container button:hover, .container button:active {
+  background: steelblue;
+  color: white;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+}
+
+.container button:not(:last-of-type) {
+    margin-right: 1rem;
+}
