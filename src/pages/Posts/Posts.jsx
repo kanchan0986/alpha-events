@@ -13,7 +13,7 @@ export default function Posts() {
     e.preventDefault()
     consentModalVisibility.setIsModalVisible(true)
     consentDetails.consentMessage.setMessage('Are you sure you to delete this post?')
-    consentDetails.consentValue.setValue(postId)
+    consentDetails.consentValue.setValue({key: 'posts', value: postId, option: false})   // refer to Consentmodal.jsx for explaination
  }
 
   const postsList = postsData.map(post => {

@@ -1,16 +1,19 @@
 import React from 'react'
-import { Link, useLoaderData, useSubmit } from 'react-router-dom'
+import { Link, useLoaderData } from 'react-router-dom'
 import style from './Events.module.css'
+import useCustomContext from '../../hooks/useCustomContext'
 
 export default function Events() {
 
   const eventsData = useLoaderData()
 
-  const submit = useSubmit()
+  const { consentModalVisibility, consentDetails } = useCustomContext()
 
   const deleteHandler = (e, eventId) => {
     e.preventDefault()
-    submit(null, {method: 'DELETE', action: `/events/${eventId}`})
+    consentModalVisibility.setIsModalVisible(true)
+    consentDetails.consentMessage.setMessage('Are you sure you to delete this event?')
+    consentDetails.consentValue.setValue({key: 'events', value: eventId, option: false})   // refer to Consentmodal.jsx for explaination
  }
 
   const eventsList = eventsData.events.map(event => {

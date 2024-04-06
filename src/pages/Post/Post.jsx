@@ -12,7 +12,7 @@ export default function Post() {
     const deleteHandler = (postId) => { 
       consentModalVisibility.setIsModalVisible(true)
       consentDetails.consentMessage.setMessage('Are you sure you to delete this post?')
-      consentDetails.consentValue.setValue(postId)
+      consentDetails.consentValue.setValue({key: 'posts', value: postId, option: false})   // refer to Consentmodal.jsx for explaination
      }
 
   return (

@@ -2,26 +2,26 @@ import React from 'react'
 import style from './Home.module.css'
 import useCustomContext from '../../hooks/useCustomContext'
 import RegisterForm from '../../components/RegisterForm/RegisterForm'
-import { useLoaderData, useSubmit, Link } from 'react-router-dom'
+import { useLoaderData, Link } from 'react-router-dom'
 
 export default function Home() {
 
   const responseData = useLoaderData()
 
-  const submit = useSubmit()
-
   const { consentModalVisibility, consentDetails } = useCustomContext()
 
   const eventDeleteHandler = (e, eventId) => {
       e.preventDefault()
-      submit({redirect: '/'}, {method: 'DELETE', action: `/events/${eventId}`})
+      consentModalVisibility.setIsModalVisible(true)
+      consentDetails.consentMessage.setMessage('Are you sure you to delete this event?')
+      consentDetails.consentValue.setValue({key: 'events', value: eventId, option: false, redirect: '/'})   // refer to Consentmodal.jsx for explaination
   }
 
   const postDeleteHandler = (e, postId) => {
       e.preventDefault()
       consentModalVisibility.setIsModalVisible(true)
       consentDetails.consentMessage.setMessage('Are you sure you to delete this post?')
-      consentDetails.consentValue.setValue(postId)
+      consentDetails.consentValue.setValue({key: 'posts', value: postId, option: false, redirect: '/'})   // refer to Consentmodal.jsx for explaination
   }
 
 

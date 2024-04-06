@@ -1,17 +1,18 @@
 import React from 'react'
-import { Link, useRouteLoaderData, useSubmit, useNavigate } from 'react-router-dom'
+import { Link, useRouteLoaderData } from 'react-router-dom'
 import style from './Event.module.css'
+import useCustomContext from '../../hooks/useCustomContext'
 
 export default function Event() {
 
     const eventData = useRouteLoaderData('event')
-    const submit = useSubmit()
-    const navigate = useNavigate()
+    const { consentModalVisibility, consentDetails } = useCustomContext()
     const event = eventData.event
 
-    const deleteHandler = () => { 
-      submit(null, {method: 'DELETE'})
-      navigate('/events')
+    const deleteHandler = (eventId) => { 
+      consentModalVisibility.setIsModalVisible(true)
+      consentDetails.consentMessage.setMessage('Are you sure you to delete this event?')
+      consentDetails.consentValue.setValue({key: 'events', value: eventId, option: true})   // refer to Consentmodal.jsx for explaination
      }
 
   return (
@@ -28,7 +29,7 @@ export default function Event() {
       </div>
       <div className={`${style['sub-container']} ${style['btn-box']}`}>
         <Link to='..'>Back</Link>
-        <a onClick={deleteHandler}>Delete</a>
+        <a onClick={() => deleteHandler(event.id)}>Delete</a>
         <Link to='edit'>Edit</Link>
       </div>
     </section>

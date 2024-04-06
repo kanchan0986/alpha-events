@@ -2,7 +2,7 @@ import React from 'react'
 import Portal from '../../Portal/Portal'
 import useCustomContext from '../../../hooks/useCustomContext'
 import style from './ConsentModal.module.css'
-import { useSubmit } from 'react-router-dom'
+import { useSubmit, useNavigate } from 'react-router-dom'
 
 export default function ConsentModal() {
 
@@ -10,16 +10,19 @@ export default function ConsentModal() {
 
     const submit = useSubmit()
 
-    const id = consentDetails.consentValue.value
+    const navigate = useNavigate()
 
-    const positiveConsentHandler = () => { 
-        consentDetails.consentValue.setValue(true)
+    const { key, value, option, redirect } = consentDetails.consentValue.value            // custom object with custom properties just to scale the functionality, redirection support and case dependent solution
+
+    const positiveConsentHandler = () => {
         consentModalVisibility.setIsModalVisible(false)
-        submit(null, {method: 'DELETE', action: `/posts/${id}`})
+        submit(redirect ? { redirect: redirect } : null, {method: 'DELETE', action: `/${key}/${value}`})
+        if(option){
+            navigate(`/${key}`)
+        }
      }
 
-    const negetiveConsentHandler = () => { 
-        consentDetails.consentValue.setValue(false)
+    const negetiveConsentHandler = () => {
         consentModalVisibility.setIsModalVisible(false)
         consentDetails.consentValue.setValue(null)
      }
