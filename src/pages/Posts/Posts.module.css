@@ -26,6 +26,7 @@
     margin-bottom: 2rem;
 }
 
+
 .post a {
     display: flex;
     text-decoration: none;
@@ -39,9 +40,21 @@
     justify-content: space-between;
 }
 
+.userId{
+    text-align: center;
+    padding: 1rem;
+}
+
+.post-desc > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
 .post-desc h4 {
     font-size: 1.2rem;
     text-transform: capitalize;
+    margin: 0;
 }
 
 .post-desc span {
@@ -69,4 +82,60 @@
 
 .post-desc button:hover, .post-desc button:active {
     background: #615e5e;
+}
+
+
+
+/* Feature box */
+
+
+.feature-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 2rem;
+    padding-inline: 1em;
+}
+
+
+
+
+/* Filter  */
+
+
+.filter-list {
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.filter-item {
+    list-style: none;
+}
+
+.filter-item a {
+    text-decoration: none;
+    margin-right: 1rem;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 0.8rem 1rem;
+    background: skyblue;
+    color: black;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.btn:hover {
+    background: steelblue;
+    color: white;
+}
+
+.grade {
+    background: #fbcd04;
+}
+
+.alphabetical {
+    background: #06aa06;
 }

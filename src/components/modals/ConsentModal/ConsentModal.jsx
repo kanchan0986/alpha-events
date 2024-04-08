@@ -16,9 +16,9 @@ export default function ConsentModal() {
 
     const positiveConsentHandler = () => {
         consentModalVisibility.setIsModalVisible(false)
-        submit(redirect ? { redirect: redirect } : null, {method: 'DELETE', action: `/${key}/${value}`})
+        submit(redirect ? { redirect: redirect } : null, {method: 'DELETE', action: `/${key}/${value}`}) // if redirect is present then pass redirect as an object to actions file; key is the route and value is params
         if(option){
-            navigate(`/${key}`)
+            navigate(`/${key}${option ? redirect : ''}`)  // if option is true navigate to key -> route and if redirect -> params is present then attach parans with the route
         }
      }
 
