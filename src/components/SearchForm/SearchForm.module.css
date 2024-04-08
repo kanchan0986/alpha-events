@@ -1,0 +1,12 @@
+.search-form input{
+    width: 35vw;
+    padding: 0.5rem;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.search-form button{
+    padding: 0.5rem;
+    font-family: inherit;
+    font-size: inherit;
+}
