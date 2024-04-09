@@ -69,3 +69,61 @@
 .event-desc button:not(:last-of-type) {
     margin-right: 1rem;
 }
+
+
+
+
+
+/* Feature box */
+
+
+.feature-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 2rem;
+    /* padding-inline: 1em; */
+}
+
+
+
+
+/* Filter  */
+
+
+.filter-list {
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.filter-item {
+    list-style: none;
+}
+
+.filter-item a {
+    text-decoration: none;
+    margin-right: 1rem;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 0.8rem 1rem;
+    background: skyblue;
+    color: black;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.btn:hover {
+    background: steelblue;
+    color: white;
+}
+
+.date {
+    background: #fbcd04;
+}
+
+.alphabetical {
+    background: #06aa06;
+}

@@ -1,9 +1,13 @@
 import React from 'react'
-import { Link, useRouteLoaderData } from 'react-router-dom'
+import { Link, useRouteLoaderData, useLocation } from 'react-router-dom'
 import style from './Event.module.css'
 import useCustomContext from '../../hooks/useCustomContext'
 
 export default function Event() {
+
+    const location = useLocation()
+
+    const redirect = location.state?.redirect || ''
 
     const eventData = useRouteLoaderData('event')
     const { consentModalVisibility, consentDetails } = useCustomContext()
@@ -12,7 +16,7 @@ export default function Event() {
     const deleteHandler = (eventId) => { 
       consentModalVisibility.setIsModalVisible(true)
       consentDetails.consentMessage.setMessage('Are you sure you to delete this event?')
-      consentDetails.consentValue.setValue({key: 'events', value: eventId, option: true})   // refer to Consentmodal.jsx for explaination
+      consentDetails.consentValue.setValue({key: 'events', value: eventId, option: true, redirect: redirect})   // refer to Consentmodal.jsx for explaination
      }
 
   return (
@@ -28,7 +32,7 @@ export default function Event() {
         <p>{event.description}</p>
       </div>
       <div className={`${style['sub-container']} ${style['btn-box']}`}>
-        <Link to='..'>Back</Link>
+        <Link to={`..${redirect}`}>Back</Link>
         <a onClick={() => deleteHandler(event.id)}>Delete</a>
         <Link to='edit'>Edit</Link>
       </div>
