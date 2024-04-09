@@ -17,7 +17,7 @@ export default function Posts() {
     e.preventDefault()
     consentModalVisibility.setIsModalVisible(true)
     consentDetails.consentMessage.setMessage('Are you sure you to delete this post?')
-    consentDetails.consentValue.setValue({key: 'posts', value: postId, option: true, redirect: `?${searchParams.toString()}`})   // refer to Consentmodal.jsx for explaination
+    consentDetails.consentValue.setValue({key: 'posts', value: postId, option: true, redirect: `?${searchParams}`})   // refer to Consentmodal.jsx for explaination
  }
 
  const filterParam = searchParams.get('filter')
@@ -48,7 +48,7 @@ export default function Posts() {
   const postsList = filterData.map(post => {
     return (
       <li className={style.post} key={post.id}>
-        <Link to={`${post.id}`} state={{ paramsValue: `?${searchParams.toString()}` }}  >
+        <Link to={`${post.id}`} state={{ paramsValue: `?${searchParams}` }}  >
           <div className={style['post-desc']}>
             <span className={style['userId']}>Grade: {post.userId}</span>
             <div>
@@ -74,7 +74,7 @@ export default function Posts() {
       srchParams.set(paramsType, paramsValue);
     }
 
-    return `?${srchParams.toString()}`;
+    return `?${srchParams}`;
   };
 
 
