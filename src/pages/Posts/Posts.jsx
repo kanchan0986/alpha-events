@@ -88,7 +88,11 @@ export default function Posts() {
           <ul className={style['filter-list']}>
             <li className={style['filter-item']}>
                 <Link to={generateSearchParams('filter', 'grade')} className={filterParam === 'grade' ? `${style.btn} ${style['grade']}` : style.btn} >Grading Order</Link>
+            </li>
+            <li className={style['filter-item']}>
                 <Link to={generateSearchParams('filter', 'alphabetical')} className={filterParam === 'alphabetical' ? `${style.btn} ${style['alphabetical']}` : style.btn} >Alphabetical Order</Link>
+            </li>
+            <li className={style['filter-item']}>
                 <Link to={generateSearchParams('filter', null)} className={filterParam === null ? `${style.btn} ${style[filterParam]}` : style.btn} >Clear All</Link>
             </li>
           </ul>
