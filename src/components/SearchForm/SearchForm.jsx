@@ -19,7 +19,7 @@ export default function SearchForm(props) {
 
   return (
     <div className={style['search-form']}>
-        <input type="text" neame="search" value={searchKey} onKeyUp={keyUpHandler} onChange={changeHandler}  placeholder={`Search ${props.formName}`} />
+        <input type="text" value={searchKey} onKeyUp={keyUpHandler} onChange={changeHandler}  placeholder={`Search ${props.formName}`} />
     </div>
   )
 }
