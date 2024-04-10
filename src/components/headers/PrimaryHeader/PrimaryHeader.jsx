@@ -11,7 +11,6 @@ export default function PrimaryHeader() {
         <Link to='/'>Alpha Events</Link>
       </div>
       <div className={`${style['sub-container']} ${style.middle}`}>
-        <SearchForm />
         <div className={style.menu}>
           <NavLink to='events' className={({isActive}) => isActive ? style.active : ''}>Events</NavLink>
           <NavLink to='posts' className={({isActive}) => isActive ? style.active : ''}>Posts</NavLink>

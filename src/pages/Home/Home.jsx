@@ -40,7 +40,7 @@ export default function Home() {
         </Link>
       </li>
     )
-  })
+  }).slice(0,3)
 
   const postsList = responseData.postsData.map(post => {
     return (
