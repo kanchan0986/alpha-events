@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useLoaderData, useSearchParams } from 'react-router-dom'
 import style from './Events.module.css'
 import useCustomContext from '../../hooks/useCustomContext'
@@ -6,26 +6,45 @@ import SearchForm from '../../components/SearchForm/SearchForm'
 
 export default function Events() {
 
+  const [ searchData, setSearchData ] = useState([])
+
+  const [ searchKeyword, setSearchKeyword ] = useState('')
+
   const eventsData = useLoaderData()
 
   const { consentModalVisibility, consentDetails } = useCustomContext()
 
   const [ searchParams ] = useSearchParams()
 
+
+  //////////////////// Search Logic /////////////////////
+
+  const redirectedKey = searchParams.get('keyword')  // getting back the search keyword
+  
+  const keyUpHandler = (searchKey) => {
+    const searchValue = eventsData.events.filter(event => event.title.toLowerCase().includes(searchKey.toLowerCase()))
+    setSearchData(searchValue)
+    setSearchKeyword(searchKey) // setting search keyword to access it back from searchParams when any redirection occurs like pressing back button or delete event
+   }
+
+
+
     //////////////////// Filteration Logic /////////////////////
 
   const filterParams = searchParams.get('filter')
 
-  let filterData
+  let filterData, alteredData
+
+  searchData.length > 0 ? alteredData = searchData : alteredData = eventsData.events
 
   if(filterParams){
 
     if(filterParams === 'date'){
-      filterData = eventsData.events.sort((a, b) => new Date(a.date) - new Date(b.date))
+      filterData = alteredData.sort((a, b) => new Date(a.date) - new Date(b.date))
     }
   
     if(filterParams === 'alphabetical'){
-      filterData = eventsData.events.sort((a, b) => {
+      filterData = alteredData.sort((a, b) => {
         let x = a.title.toLowerCase()
         let y =  b.title.toLowerCase()
         if (x < y) {return -1;}
@@ -35,7 +54,7 @@ export default function Events() {
     }
 
   } else {
-    filterData = eventsData.events
+    filterData = alteredData
   }
 
    //////////////////// List Rendering /////////////////////
@@ -51,7 +70,7 @@ export default function Events() {
   const eventsList = filterData.map(event => {
     return (
       <li className={style.event} key={event.id}>
-        <Link to={event.id} state={{ redirect: `?${searchParams}` }}>
+        <Link to={event.id} state={{ redirect: `?${searchParams}`, searchKeyword: searchKeyword }}>
           <img src={event.image} />
           <div className={style['event-desc']}>
             <h4>{event.title}</h4>
@@ -97,7 +116,7 @@ export default function Events() {
           </ul>
         </div>
         <div className={style['Search-box']}>
-          <SearchForm />
+          <SearchForm onKeyUp={keyUpHandler} formName='Events' redirectedKey={redirectedKey} />
         </div>
       </div>
       <div className={style['sub-container']}>

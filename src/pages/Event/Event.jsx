@@ -7,16 +7,22 @@ export default function Event() {
 
     const location = useLocation()
 
-    const redirect = location.state?.redirect || ''
-
     const eventData = useRouteLoaderData('event')
+
     const { consentModalVisibility, consentDetails } = useCustomContext()
+
+    const redirect = location.state?.redirect || ''     // optional chaining
+
+    const searchKeyword = location.state?.searchKeyword || '' // optional chaining
+
+    const redirectTo = `${redirect}${searchKeyword ? `&keyword=${searchKeyword}` : ''}`  // if search keyword exists attach it with the query params
+
     const event = eventData.event
 
     const deleteHandler = (eventId) => { 
       consentModalVisibility.setIsModalVisible(true)
       consentDetails.consentMessage.setMessage('Are you sure you to delete this event?')
-      consentDetails.consentValue.setValue({key: 'events', value: eventId, option: true, redirect: redirect})   // refer to Consentmodal.jsx for explaination
+      consentDetails.consentValue.setValue({key: 'events', value: eventId, option: true, redirect: redirectTo})   // refer to Consentmodal.jsx for explaination
      }
 
   return (
@@ -32,7 +38,7 @@ export default function Event() {
         <p>{event.description}</p>
       </div>
       <div className={`${style['sub-container']} ${style['btn-box']}`}>
-        <Link to={`..${redirect}`}>Back</Link>
+        <Link to={`..${redirectTo}`}>Back</Link>
         <a onClick={() => deleteHandler(event.id)}>Delete</a>
         <Link to='edit'>Edit</Link>
       </div>
