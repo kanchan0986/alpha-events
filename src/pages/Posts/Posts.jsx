@@ -3,7 +3,6 @@ import { useLoaderData, Link, useSearchParams } from 'react-router-dom'
 import style from './Posts.module.css'
 import useCustomContext from '../../hooks/useCustomContext'
 import SearchForm from '../../components/SearchForm/SearchForm'
-// import Filter from '../../components/Filter/Filter'
 
 export default function Posts() {
 
@@ -13,12 +12,9 @@ export default function Posts() {
 
   const { consentModalVisibility, consentDetails } = useCustomContext()
 
-  const deleteHandler = (e, postId) => {
-    e.preventDefault()
-    consentModalVisibility.setIsModalVisible(true)
-    consentDetails.consentMessage.setMessage('Are you sure you to delete this post?')
-    consentDetails.consentValue.setValue({key: 'posts', value: postId, option: true, redirect: `?${searchParams}`})   // refer to Consentmodal.jsx for explaination
- }
+
+  //////////////////// Filteration Logic /////////////////////
+
 
  const filterParam = searchParams.get('filter')
 
@@ -45,6 +41,17 @@ export default function Posts() {
  }
 
 
+   //////////////////// List Rendering /////////////////////
+
+
+ const deleteHandler = (e, postId) => {
+  e.preventDefault()
+  consentModalVisibility.setIsModalVisible(true)
+  consentDetails.consentMessage.setMessage('Are you sure you to delete this post?')
+  consentDetails.consentValue.setValue({key: 'posts', value: postId, option: true, redirect: `?${searchParams}`})   // refer to Consentmodal.jsx for explaination
+}
+
+
   const postsList = filterData.map(post => {
     return (
       <li className={style.post} key={post.id}>
@@ -64,6 +71,9 @@ export default function Posts() {
   // .slice(0,20)
 
 
+    //////////////////// SearchParams generation for filteration /////////////////////
+
+
   const generateSearchParams = (paramsType, paramsValue) => {
 
     const srchParams = new URLSearchParams(searchParams);
@@ -76,7 +86,6 @@ export default function Posts() {
 
     return `?${srchParams}`;
   };
-
 
 
 

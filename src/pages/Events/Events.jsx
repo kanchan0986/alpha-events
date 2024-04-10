@@ -12,8 +12,9 @@ export default function Events() {
 
   const [ searchParams ] = useSearchParams()
 
-  const filterParams = searchParams.get('filter')
+    //////////////////// Filteration Logic /////////////////////
 
+  const filterParams = searchParams.get('filter')
 
   let filterData
 
@@ -37,7 +38,7 @@ export default function Events() {
     filterData = eventsData.events
   }
 
-
+   //////////////////// List Rendering /////////////////////
 
 
   const deleteHandler = (e, eventId) => {
@@ -63,6 +64,12 @@ export default function Events() {
     )
   })
 
+
+
+      //////////////////// SearchParams generation for filteration /////////////////////
+
+
+
   const generateSearchParams = (paramsType, paramsValue) => { 
 
     const srchParams = new URLSearchParams(searchParams)
@@ -76,6 +83,7 @@ export default function Events() {
     return `?${srchParams}`
 
    }
+   
 
   return (
     <section className={style.container}>
