@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useLoaderData, Link, useSearchParams } from 'react-router-dom'
 import style from './Posts.module.css'
 import useCustomContext from '../../hooks/useCustomContext'
 import SearchForm from '../../components/SearchForm/SearchForm'
 
 export default function Posts() {
+
+  const [ searchData, setSearchData ] = useState([])
+
+  const [ searchKeyword, setSearchKeyword ] = useState('')
 
   const postsData = useLoaderData()
 
@@ -13,21 +17,34 @@ export default function Posts() {
   const { consentModalVisibility, consentDetails } = useCustomContext()
 
 
+  //////////////////// Search Logic /////////////////////
+
+  const redirectedKey = searchParams.get('keyword')  // getting back the search keyword
+  
+  const keyUpHandler = (searchKey) => {
+    const searchValue = postsData.filter(post => post.title.toLowerCase().includes(searchKey.toLowerCase()))
+    setSearchData(searchValue)
+    setSearchKeyword(searchKey) // setting search keyword to access it back from searchParams when any redirection occurs like pressing back button or delet post
+   }
+
+
   //////////////////// Filteration Logic /////////////////////
 
 
  const filterParam = searchParams.get('filter')
 
- let filterData
+ let filterData, alteredData
+
+ searchData.length > 0 ? alteredData = searchData : alteredData = postsData
 
  if(filterParam){
 
    if(filterParam === 'grade'){
-      filterData = postsData.sort((a, b) => b.userId - a.userId)
+      filterData = alteredData.sort((a, b) => b.userId - a.userId)
     }
   
    if(filterParam === 'alphabetical'){
-      filterData = postsData.sort((a, b) => {
+      filterData = alteredData.sort((a, b) => {
         let x = a.title.toLowerCase()
         let y =  b.title.toLowerCase()
         if (x < y) {return -1;}
@@ -37,7 +54,7 @@ export default function Posts() {
     }
 
  } else {
-    filterData = postsData
+    filterData = alteredData
  }
 
 
@@ -55,7 +72,7 @@ export default function Posts() {
   const postsList = filterData.map(post => {
     return (
       <li className={style.post} key={post.id}>
-        <Link to={`${post.id}`} state={{ paramsValue: `?${searchParams}` }}  >
+        <Link to={`${post.id}`} state={{ paramsValue: `?${searchParams}`, searchKeyword: searchKeyword }}  >
           <div className={style['post-desc']}>
             <span className={style['userId']}>Grade: {post.userId}</span>
             <div>
@@ -107,7 +124,7 @@ export default function Posts() {
           </ul>
         </div>
         <div className={style['Search-box']}>
-          <SearchForm />
+          <SearchForm onKeyUp={keyUpHandler} formName='Posts' redirectedKey={redirectedKey} />
         </div>
       </div>
       <div className={style['posts-container']}>
