@@ -12,8 +12,6 @@ import Login from './pages/Login/Login'
 import NewEvent from './pages/NewEvent/NewEvent'
 import EditEvent from './pages/EditEvent/EditEvent'
 import RootLayout from './layouts/RootLayout'
-import EventsLayout from './layouts/EventsLayout'
-import PostsLayout from './layouts/PostsLayout'
 import { loadEvent, loadEvents, loadHomepage, loadPost, loadPosts } from './util/Loaders'
 import { deleteEvent, deletePost, modifyEventAction, modifyPostAction, registerAction } from './util/Actions'
 import useCustomContext from './hooks/useCustomContext'
@@ -31,7 +29,7 @@ export default function App() {
   const router = createBrowserRouter([
       {path: '/', id: 'root', element:<RootLayout />, loader: loadHomepage, children: [
           {index: true, element:<Home />},
-          {path: 'events', element:<EventsLayout />, children: [
+          {path: 'events', children: [
               {index: true, element: <Events />, loader: loadEvents},
               {path: 'new', element: <NewEvent />, action: modifyEventAction(setter)},
               {path: ':id', id: 'event', loader: loadEvent, action: deleteEvent(setter), children: [
@@ -39,7 +37,7 @@ export default function App() {
                   {path: 'edit', element: <EditEvent />, action: modifyEventAction(setter)}
               ]},
           ]},
-          {path: 'posts', element: <PostsLayout />, children: [
+          {path: 'posts', children: [
               {index: true, element: <Posts />, loader: loadPosts},
               {path: 'new', element: <NewPost />, action: modifyPostAction(setter)},
               {path: ':id', id: 'post',  loader: loadPost, action: deletePost(setter), children: [
