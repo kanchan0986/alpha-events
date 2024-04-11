@@ -24,6 +24,16 @@ const Context = createContext({
             setValue: () => {},
         },
     },
+    backLinks: {
+        events: {
+            eventLinks: [],
+            setEventLinks: () => {},
+        },
+        posts: {
+            postLinks: [],
+            setPostLinks: () => {},
+        },
+    },
 
     
 })

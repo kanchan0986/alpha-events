@@ -2,11 +2,11 @@ import React from 'react'
 import style from './Home.module.css'
 import useCustomContext from '../../hooks/useCustomContext'
 import RegisterForm from '../../components/RegisterForm/RegisterForm'
-import { useLoaderData, Link } from 'react-router-dom'
+import { Link, useRouteLoaderData } from 'react-router-dom'
 
 export default function Home() {
 
-  const responseData = useLoaderData()
+  const responseData = useRouteLoaderData('root')
 
   const { consentModalVisibility, consentDetails } = useCustomContext()
 

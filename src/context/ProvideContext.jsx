@@ -8,6 +8,8 @@ export default function ProvideContext({children}) {
     const [successsMessage, setSuccesssMessage] = useState('')
     const [consentMessage, setConsentMessage] = useState('')
     const [consentValue, setConsentValue] = useState(null)
+    const [eventLinks, setEventLinks] = useState([])
+    const [postLinks, setPostLinks] = useState([])
     
 
     const initialValue = {
@@ -33,8 +35,17 @@ export default function ProvideContext({children}) {
               value: consentValue,
               setValue: setConsentValue,
           },
-      },
-
+        },
+        backLinks: {
+            events: {
+                eventLinks,
+                setEventLinks,
+            },
+            posts: {
+                postLinks,
+                setPostLinks,
+            },
+        },
     }
 
   return (

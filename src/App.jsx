@@ -29,8 +29,8 @@ export default function App() {
   }
   
   const router = createBrowserRouter([
-      {path: '/', element:<RootLayout />, children: [
-          {index: true, element:<Home />, loader: loadHomepage},
+      {path: '/', id: 'root', element:<RootLayout />, loader: loadHomepage, children: [
+          {index: true, element:<Home />},
           {path: 'events', element:<EventsLayout />, children: [
               {index: true, element: <Events />, loader: loadEvents},
               {path: 'new', element: <NewEvent />, action: modifyEventAction(setter)},
