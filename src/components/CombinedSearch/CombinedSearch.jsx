@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import useCustomContext from '../../hooks/useCustomContext'
 import style from './CombinedSearch.module.css'
 
-export default function CombinedSearch() {
+export default function CombinedSearch( { combinedData }) {
 
     const [searchKey, setSearchKey] = useState('')
 
     const [suggestionArr, setSuggestionArr] = useState([])
 
-    const { backLinks } = useCustomContext() // get backlinks from the context provider which sets in Root layout file
+    const eventsArrWithBacklinks = combinedData.eventsData.events.map(event => ({ ...event, id:  `/events/${event.id}`})) // add events route before the id so to combined search functionality to work 
+
+    const postsArrWithBacklinks = combinedData.postsData.map(post => ({ ...post, id:  `/posts/${post.id}`})) // add posts route before the id so to combined search functionality to work
 
     useEffect(() => {
-        setSuggestionArr([ ...backLinks.events.eventLinks, ...backLinks.posts.postLinks ])
-    }, [backLinks.events.eventLinks, backLinks.posts.postLinks]) // whenever event links and post link changes, set suggestion array
+        setSuggestionArr([ ...eventsArrWithBacklinks, ...postsArrWithBacklinks ])
+    }, [])
 
 
     const changeHandler = (event) => { 
