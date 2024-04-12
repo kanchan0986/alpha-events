@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import { Link, useLoaderData, useSearchParams } from 'react-router-dom'
+import React, { Suspense, useState } from 'react'
+import { Await, Link, useLoaderData, useSearchParams } from 'react-router-dom'
 import style from './Events.module.css'
 import useCustomContext from '../../hooks/useCustomContext'
 import SearchForm from '../../components/SearchForm/SearchForm'
+import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
 
 export default function Events() {
 
@@ -10,19 +11,21 @@ export default function Events() {
 
   const [ searchKeyword, setSearchKeyword ] = useState('')
 
-  const eventsData = useLoaderData()
+  const { events } = useLoaderData()
 
   const { consentModalVisibility, consentDetails } = useCustomContext()
 
   const [ searchParams ] = useSearchParams()
 
 
+  const listEvents = (resolvedEventsData) => {    // Awaiting function to create listing component by getting the resolved data from the Await component's children
+
   //////////////////// Search Logic /////////////////////
 
   const redirectedKey = searchParams.get('keyword')  // getting back the search keyword
   
   const keyUpHandler = (searchKey) => {
-    const searchValue = eventsData.events.filter(event => event.title.toLowerCase().includes(searchKey.toLowerCase()))
+    const searchValue = resolvedEventsData.filter(event => event.title.toLowerCase().includes(searchKey.toLowerCase()))
     setSearchData(searchValue)
     setSearchKeyword(searchKey) // setting search keyword to access it back from searchParams when any redirection occurs like pressing back button or delete event
    }
@@ -35,7 +38,7 @@ export default function Events() {
 
   let filterData, alteredData
 
-  searchData.length > 0 ? alteredData = searchData : alteredData = eventsData.events
+  searchData.length > 0 ? alteredData = searchData : alteredData = resolvedEventsData
 
   if(filterParams){
 
@@ -102,26 +105,42 @@ export default function Events() {
     return `?${srchParams}`
 
    }
+
+
+
+    return (
+      <>
+        <div className={style['feature-box']}>
+          <div className={style['filter-box']}>
+            <ul className={style['filter-list']}>
+              <li className={style['filter-item']}><Link to={generateSearchParams('filter', 'date')} className={filterParams === 'date' ? `${style.btn} ${style['date']}` : style.btn}>Creation Date</Link></li>
+              <li className={style['filter-item']}><Link to={generateSearchParams('filter', 'alphabetical')} className={filterParams === 'alphabetical' ? `${style.btn} ${style['alphabetical']}` : style.btn}>Alphabetical Order</Link></li>
+              <li className={style['filter-item']}><Link to={generateSearchParams('filter', null)} className={style.btn}>Clear All</Link></li>
+            </ul>
+          </div>
+          <div className={style['Search-box']}>
+            <SearchForm onKeyUp={keyUpHandler} formName='Events' redirectedKey={redirectedKey} />
+          </div>
+        </div>
+        <div className={style['sub-container']}>
+          <ul className={style['events-list']}>{eventsList}</ul>
+        </div>
+      </>
+    )
+
+   }
    
 
   return (
     <section className={style.container}>
       <h2>Events</h2>
-      <div className={style['feature-box']}>
-        <div className={style['filter-box']}>
-          <ul className={style['filter-list']}>
-            <li className={style['filter-item']}><Link to={generateSearchParams('filter', 'date')} className={filterParams === 'date' ? `${style.btn} ${style['date']}` : style.btn}>Creation Date</Link></li>
-            <li className={style['filter-item']}><Link to={generateSearchParams('filter', 'alphabetical')} className={filterParams === 'alphabetical' ? `${style.btn} ${style['alphabetical']}` : style.btn}>Alphabetical Order</Link></li>
-            <li className={style['filter-item']}><Link to={generateSearchParams('filter', null)} className={style.btn}>Clear All</Link></li>
-          </ul>
-        </div>
-        <div className={style['Search-box']}>
-          <SearchForm onKeyUp={keyUpHandler} formName='Events' redirectedKey={redirectedKey} />
-        </div>
-      </div>
-      <div className={style['sub-container']}>
-        <ul className={style['events-list']}>{eventsList}</ul>
-      </div>
+      <Suspense fallback={<LoadingMessage postType='Events' />}>
+        <Await resolve={events}>
+          {resolvedEventsData => listEvents(resolvedEventsData)}
+        </Await>
+      </Suspense>
     </section>
   )
 }
+
+

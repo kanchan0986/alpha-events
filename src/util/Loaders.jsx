@@ -1,3 +1,5 @@
+import { defer } from "react-router-dom"
+
 export const loadHomepage = async () => {
 
     // fetch Events
@@ -21,12 +23,19 @@ export const loadHomepage = async () => {
     return response
 }
 
-export const loadEvents = async () => {
+export const fetchEvents = async () => {
     const response = await fetch('http://localhost:8080/events')
     if(!response.ok){
         // 
     }
-    return response
+    const responseData = await response.json()
+    return responseData.events
+}
+
+export const loadEvents = () => {
+    return defer({
+        events: fetchEvents()
+    })
 }
 
 export const loadEvent = async ({ params }) => {
