@@ -47,12 +47,19 @@ export const loadEvent = async ({ params }) => {
     return response
 }
 
-export const loadPosts = async () => {
+export const fetchPosts = async () => {
     const response = await fetch('https://jsonplaceholder.typicode.com/posts')
     if(!response.ok){
         // 
     }
-    return response
+    const responseData = await response.json()
+    return responseData
+}
+
+export const loadPosts = () => {
+    return defer({
+        posts: fetchPosts()
+    })
 }
 
 export const loadPost = async ({ params }) => {

@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import { useLoaderData, Link, useSearchParams } from 'react-router-dom'
+import React, { Suspense, useState } from 'react'
+import { useLoaderData, Link, useSearchParams, Await } from 'react-router-dom'
 import style from './Posts.module.css'
 import useCustomContext from '../../hooks/useCustomContext'
 import SearchForm from '../../components/SearchForm/SearchForm'
+import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
 
 export default function Posts() {
 
@@ -10,19 +11,21 @@ export default function Posts() {
 
   const [ searchKeyword, setSearchKeyword ] = useState('')
 
-  const postsData = useLoaderData()
+  const { posts } = useLoaderData()
 
   const [ searchParams ] = useSearchParams()
 
   const { consentModalVisibility, consentDetails } = useCustomContext()
 
 
+  const listPosts = (resolvedPostsData) => {    // Awaiting function to create listing component by getting the resolved data from the Await component's children 
+
   //////////////////// Search Logic /////////////////////
 
   const redirectedKey = searchParams.get('keyword')  // getting back the search keyword
   
   const keyUpHandler = (searchKey) => {
-    const searchValue = postsData.filter(post => post.title.toLowerCase().includes(searchKey.toLowerCase()))
+    const searchValue = resolvedPostsData.filter(post => post.title.toLowerCase().includes(searchKey.toLowerCase()))
     setSearchData(searchValue)
     setSearchKeyword(searchKey) // setting search keyword to access it back from searchParams when any redirection occurs like pressing back button or delet post
    }
@@ -35,7 +38,7 @@ export default function Posts() {
 
  let filterData, alteredData
 
- searchData.length > 0 ? alteredData = searchData : alteredData = postsData
+ searchData.length > 0 ? alteredData = searchData : alteredData = resolvedPostsData
 
  if(filterParam){
 
@@ -105,10 +108,9 @@ export default function Posts() {
   };
 
 
-
   return (
-    <section className={style.container}>
-      <h2>Posts</h2>
+
+    <>
       <div className={style['feature-box']}>
         <div className={style['filter-box']}>
           <ul className={style['filter-list']}>
@@ -128,8 +130,25 @@ export default function Posts() {
         </div>
       </div>
       <div className={style['posts-container']}>
-          <ul className={style['posts-list']}>{postsList}</ul>
-        </div>
+        <ul className={style['posts-list']}>{postsList}</ul>
+      </div>
+    </>
+
+  )
+  
+   }
+
+
+
+  return (
+    <section className={style.container}>
+      <h2>Posts</h2>
+      <Suspense fallback={<LoadingMessage postType='Posts' />}>
+        <Await resolve={posts}>
+          {resolvedPostsData => listPosts(resolvedPostsData)}
+        </Await>
+      </Suspense>
+
     </section>
   )
 }
