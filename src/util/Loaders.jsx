@@ -38,13 +38,21 @@ export const loadEvents = () => {
     })
 }
 
-export const loadEvent = async ({ params }) => {
+export const fetchEvent = async ( params ) => {
     const id = params.id
     const response = await fetch(`http://localhost:8080/events/${id}`)
     if(!response.ok){
         // 
     }
-    return response
+    const responseData = await response.json()
+    return responseData.event
+}
+
+
+export const loadEvent = ({ params }) => {
+    return defer({
+        event: fetchEvent(params)
+    })
 }
 
 export const fetchPosts = async () => {
@@ -62,7 +70,7 @@ export const loadPosts = () => {
     })
 }
 
-export const loadPost = async ({ params }) => {
+export const fetchPost = async ( params ) => {
     const id = params.id
     const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
     if(!response.ok){
@@ -70,4 +78,10 @@ export const loadPost = async ({ params }) => {
     }
     const responseData = await response.json()
     return responseData
+}
+
+export const loadPost = ({ params }) => {
+    return defer({
+        post: fetchPost(params)
+    })
 }
