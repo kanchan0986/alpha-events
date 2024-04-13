@@ -1,16 +1,24 @@
 import React from 'react'
-import { useRouteLoaderData } from 'react-router-dom'
+import { Await, useRouteLoaderData } from 'react-router-dom'
 import PostForm from '../../components/PostForm/PostForm'
 import style from './EditPost.module.css'
 
 export default function EditPost() {
 
-    const postData = useRouteLoaderData('post')
+    const { post } = useRouteLoaderData('post')
 
   return (
     <section className={style.container}>
-      <h2>Edit {postData.title}</h2>
-      <PostForm existingPost={postData} method='PUT' />
+      <Await resolve={post}>{/**********Resolved the promise got from the loader********/}
+        {resolvedPost => {
+          return (
+            <>
+              <h2>Edit {resolvedPost.title}</h2>
+              <PostForm existingPost={resolvedPost} method='PUT' />
+            </>
+          )
+        }}
+      </Await>
     </section>
   )
 }
