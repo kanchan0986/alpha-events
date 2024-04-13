@@ -1,28 +1,5 @@
 import { defer } from "react-router-dom"
 
-export const loadHomepage = async () => {
-
-    // fetch Events
-
-    const eventsResponse = await fetch('http://localhost:8080/events')
-    if(!eventsResponse.ok){
-        // 
-    }
-    const eventsData = await eventsResponse.json()
-
-    // fetch Posts
-
-    const postsResponse = await fetch('https://jsonplaceholder.typicode.com/posts')
-    if(!postsResponse.ok){
-        // 
-    }
-    const postsData = await postsResponse.json()
-
-    const response = { eventsData, postsData}
-
-    return response
-}
-
 export const fetchEvents = async () => {
     const response = await fetch('http://localhost:8080/events')
     if(!response.ok){
@@ -85,3 +62,13 @@ export const loadPost = ({ params }) => {
         post: fetchPost(params)
     })
 }
+
+export const loadHomepage = () => {
+
+    return defer({
+        events: fetchEvents(),
+        posts: fetchPosts()
+    })
+}
+
+
