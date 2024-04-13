@@ -8,7 +8,7 @@ import ConsentModal from '../components/modals/ConsentModal/ConsentModal'
 
 export default function RootLayout() {
 
-  const responseData = useLoaderData()
+  const { events, posts } = useLoaderData()
 
   const { successModalVisibility, consentModalVisibility } = useCustomContext()
 
@@ -16,7 +16,7 @@ export default function RootLayout() {
     <>
         {successModalVisibility.isModalVisible && <SuccessModal />}
         {consentModalVisibility.isModalVisible && <ConsentModal />}
-        <PrimaryHeader combinedData={responseData} />
+        <PrimaryHeader combinedData={ { events, posts }} />
         <Outlet />
         <PrimaryFooter />
     </>

@@ -7,13 +7,25 @@ export default function CombinedSearch( { combinedData }) {
     const [searchKey, setSearchKey] = useState('')
 
     const [suggestionArr, setSuggestionArr] = useState([])
+    
+    const resolvedEvents = Promise.resolve(combinedData.events) // Promise came from Loaders which has to be resolved
 
-    const eventsArrWithBacklinks = combinedData.eventsData.events.map(event => ({ ...event, id:  `/events/${event.id}`})) // add events route before the id so to combined search functionality to work 
-
-    const postsArrWithBacklinks = combinedData.postsData.map(post => ({ ...post, id:  `/posts/${post.id}`})) // add posts route before the id so to combined search functionality to work
+    const resolvedPosts = Promise.resolve(combinedData.posts) // Promise came from Loaders which has to be resolved
 
     useEffect(() => {
-        setSuggestionArr([ ...eventsArrWithBacklinks, ...postsArrWithBacklinks ])
+
+        resolvedEvents.then(data => {
+            const eventsData = data.map(event => ({ ...event, id:  `/events/${event.id}`})) // add events route before the id so to combined search functionality to work
+            setSuggestionArr(prevArr => [...prevArr, ...eventsData])
+        })
+        
+        resolvedPosts.then(data => {
+            const postsData = data.map(post => ({ ...post, id:  `/posts/${post.id}`})) // add posts route before the id so to combined search functionality to work
+            setSuggestionArr(prevArr => [...prevArr, ...postsData])
+        })
+
+
+
     }, [])
 
 
