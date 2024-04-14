@@ -1,5 +1,9 @@
 import { defer } from "react-router-dom"
 
+/* -------------------------------------------------------------------------- */
+/*                               Events Loaders                               */
+/* -------------------------------------------------------------------------- */
+
 export const fetchEvents = async () => {
     const response = await fetch('http://localhost:8080/events')
     if(!response.ok){
@@ -14,6 +18,12 @@ export const loadEvents = () => {
         events: fetchEvents()
     })
 }
+
+
+/* -------------------------------------------------------------------------- */
+/*                                Event Loader                                */
+/* -------------------------------------------------------------------------- */
+
 
 export const fetchEvent = async ( params ) => {
     const id = params.id
@@ -32,6 +42,10 @@ export const loadEvent = ({ params }) => {
     })
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                Posts Loaders                               */
+/* -------------------------------------------------------------------------- */
+
 export const fetchPosts = async () => {
     const response = await fetch('https://jsonplaceholder.typicode.com/posts')
     if(!response.ok){
@@ -46,6 +60,12 @@ export const loadPosts = () => {
         posts: fetchPosts()
     })
 }
+
+
+/* -------------------------------------------------------------------------- */
+/*                                Post Loaders                                */
+/* -------------------------------------------------------------------------- */
+
 
 export const fetchPost = async ( params ) => {
     const id = params.id
@@ -62,6 +82,12 @@ export const loadPost = ({ params }) => {
         post: fetchPost(params)
     })
 }
+
+
+/* -------------------------------------------------------------------------- */
+/*                               Hompage Loaders                              */
+/* -------------------------------------------------------------------------- */
+
 
 export const loadHomepage = () => {
 

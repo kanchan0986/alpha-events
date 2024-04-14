@@ -1,5 +1,9 @@
 import { redirect } from "react-router-dom"
 
+/* -------------------------------------------------------------------------- */
+/*                     Event creation and updation Action                     */
+/* -------------------------------------------------------------------------- */
+
 export const modifyEventAction = async ({request, params}) => {
 
     const formData = await request.formData()
@@ -32,12 +36,24 @@ export const modifyEventAction = async ({request, params}) => {
     }
 
     console.log(response)
-    console.log('Event Modified')
-    return redirect('/events')
+
+    if(method === 'PATCH'){
+        console.log('Event Modified')
+        return redirect(`/events/${params.id}`)
+    } else {
+        console.log('Event Created')
+        return redirect('/events')
+    }
 }
 
-export const deleteEvent = async ({params}) => {
+/* -------------------------------------------------------------------------- */
+/*                            Event Deletion Action                           */
+/* -------------------------------------------------------------------------- */
+
+export const deleteEvent = async ({request, params}) => {
     const id = params.id
+    const formData = await request.formData()
+    const pathName = formData.get('pathName')
     const response = await fetch(`http://localhost:8080/events/${id}`, {
         method: 'DELETE'
     })
@@ -45,9 +61,22 @@ export const deleteEvent = async ({params}) => {
         // 
     }
     console.log(response)
-    console.log('Event Deleted')
-    return redirect('/events')
+
+    if(pathName){
+        console.log('Event Deleted')
+        return redirect(pathName)
+    } else {
+        console.log('Event Deleted')
+        return redirect('/events')
+    }
+
 }
+
+
+/* -------------------------------------------------------------------------- */
+/*                      Post creation and updation Action                     */
+/* -------------------------------------------------------------------------- */
+
 
 export const modifyPostAction = async ({request, params}) => {
 
@@ -80,12 +109,25 @@ export const modifyPostAction = async ({request, params}) => {
     }
 
     console.log(response)
-    console.log('Post Modified')
-    return redirect('/posts')
+    if(method === 'PUT'){
+        console.log('Post Modified')
+        return redirect(`/posts/${params.id}`)
+    } else {
+        console.log('Post Created')
+        return redirect('/posts')
+    }
 }
 
-export const deletePost = async ({params}) => {
+
+/* -------------------------------------------------------------------------- */
+/*                            Post Deletion Action                            */
+/* -------------------------------------------------------------------------- */
+
+
+export const deletePost = async ({request, params}) => {
     const id = params.id
+    const formData = await request.formData()
+    const pathName = formData.get('pathName')
     const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
         method: 'DELETE'
     })
@@ -93,10 +135,22 @@ export const deletePost = async ({params}) => {
         // 
     }
     console.log(response)
-    console.log('Post Deleted')
 
-    return redirect('/posts')
+    if(pathName){
+        console.log('Post Deleted')
+        return redirect(pathName)
+    } else {
+        console.log('Post Deleted')
+        return redirect('/posts')
+    }
+
 }
+
+
+/* -------------------------------------------------------------------------- */
+/*                       Newsletter Registration Action                       */
+/* -------------------------------------------------------------------------- */
+
 
 export const registerAction = async ({request}) => {
     const formData = await request.formData()

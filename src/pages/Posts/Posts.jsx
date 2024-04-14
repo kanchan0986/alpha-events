@@ -65,7 +65,7 @@ export default function Posts() {
 
  const deleteHandler = (e, postId) => {
   e.preventDefault()
-  submit(null, {method: 'DELETE', action: `/posts/${postId}`, replace: true})
+  submit(null, {method: 'DELETE', action: `/posts/${postId}`})
 }
 
 

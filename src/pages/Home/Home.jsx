@@ -1,12 +1,12 @@
 import React, { Suspense } from 'react'
 import style from './Home.module.css'
 import RegisterForm from '../../components/RegisterForm/RegisterForm'
-import { Await, Link, useRouteLoaderData, useSubmit } from 'react-router-dom'
+import { Await, Link, useLoaderData, useSubmit } from 'react-router-dom'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
 
 export default function Home() {
 
-  const { events, posts } = useRouteLoaderData('root')
+  const { events, posts } = useLoaderData()
 
   const submit = useSubmit()
 
@@ -16,7 +16,7 @@ export default function Home() {
     
     const eventDeleteHandler = (e, eventId) => {
         e.preventDefault()
-        submit(null, {method: 'DELETE', action: `/events/${eventId}`, replace: true })
+        submit({pathName: '/'}, {method: 'DELETE', action: `/events/${eventId}`})
     }
 
 
@@ -61,7 +61,7 @@ export default function Home() {
 
     const postDeleteHandler = (e, postId) => {
         e.preventDefault()
-        submit(null, {method: 'DELETE', action: `/posts/${postId}`, replace: true})
+        submit({pathName: '/'}, {method: 'DELETE', action: `/posts/${postId}`})
     }
 
 
