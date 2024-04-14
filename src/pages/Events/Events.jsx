@@ -1,7 +1,6 @@
 import React, { Suspense, useState } from 'react'
-import { Await, Link, useLoaderData, useSearchParams } from 'react-router-dom'
+import { Await, Link, useLoaderData, useSearchParams, useSubmit } from 'react-router-dom'
 import style from './Events.module.css'
-import useCustomContext from '../../hooks/useCustomContext'
 import SearchForm from '../../components/SearchForm/SearchForm'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
 
@@ -13,9 +12,9 @@ export default function Events() {
 
   const { events } = useLoaderData()
 
-  const { consentModalVisibility, consentDetails } = useCustomContext()
-
   const [ searchParams ] = useSearchParams()
+
+  const submit = useSubmit()
 
 
   const listEvents = (resolvedEventsData) => {    // Awaiting function to create listing component by getting the resolved data from the Await component's children
@@ -65,9 +64,7 @@ export default function Events() {
 
   const deleteHandler = (e, eventId) => {
     e.preventDefault()
-    consentModalVisibility.setIsModalVisible(true)
-    consentDetails.consentMessage.setMessage('Are you sure you to delete this event?')
-    consentDetails.consentValue.setValue({key: 'events', value: eventId, option: true, redirect: `?${searchParams}`})   // refer to Consentmodal.jsx for explaination
+    submit(null, {method: 'DELETE', action: `/events/${eventId}`, replace: true })
  }
 
   const eventsList = filterData.map(event => {

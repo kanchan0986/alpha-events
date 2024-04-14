@@ -1,31 +1,21 @@
 import React, { Suspense } from 'react'
-import { Link, useRouteLoaderData, useLocation, Await } from 'react-router-dom'
+import { Link, useRouteLoaderData, Await, useSubmit } from 'react-router-dom'
 import style from './Event.module.css'
-import useCustomContext from '../../hooks/useCustomContext'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
 
 export default function Event() {
 
-    const location = useLocation()
-
     const { event } = useRouteLoaderData('event')
 
-    const { consentModalVisibility, consentDetails } = useCustomContext()
+    const submit = useSubmit()
 
     const renderEvent = (resolvedEvent) => { 
-
-      const redirect = location.state?.redirect || ''     // optional chaining
-
-      const searchKeyword = location.state?.searchKeyword || '' // optional chaining
-  
-      const redirectTo = `${redirect}${searchKeyword ? `&keyword=${searchKeyword}` : ''}`  // if search keyword exists attach it with the query params
   
       const event = resolvedEvent
   
       const deleteHandler = (eventId) => { 
-        consentModalVisibility.setIsModalVisible(true)
-        consentDetails.consentMessage.setMessage('Are you sure you to delete this event?')
-        consentDetails.consentValue.setValue({key: 'events', value: eventId, option: true, redirect: redirectTo})   // refer to Consentmodal.jsx for explaination
+        console.log('Deleting Event...')
+        submit(null, {method: 'DELETE', action: `/events/${eventId}`, replace: true })
        }
 
       return (
@@ -42,7 +32,7 @@ export default function Event() {
             <p>{event.description}</p>
           </div>
           <div className={`${style['sub-container']} ${style['btn-box']}`}>
-            <Link to={`..${redirectTo}`}>Back</Link>
+            <Link to={`..`}>Back</Link>
             <a onClick={() => deleteHandler(event.id)}>Delete</a>
             <Link to='edit'>Edit</Link>
           </div>

@@ -1,31 +1,21 @@
 import React, { Suspense } from 'react'
 import style from './Post.module.css'
-import useCustomContext from '../../hooks/useCustomContext'
-import { Link, useRouteLoaderData, useLocation, Await } from 'react-router-dom'
+import { Link, useRouteLoaderData, Await, useSubmit } from 'react-router-dom'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
 
 export default function Post() {
 
     const { post } = useRouteLoaderData('post')
 
-    const { consentModalVisibility, consentDetails } = useCustomContext()
+    const submit = useSubmit()
 
-    const location = useLocation()
-
-    const renderPost = (resolvedPost) => { 
-
-      const redirect = location.state?.paramsValue || '' // optional chaining
-
-      const searchKeyword = location.state?.searchKeyword || '' // optional chaining
-  
-      const redirectTo = `${redirect}${searchKeyword ? `&keyword=${searchKeyword}` : ''}`  // if search keyword exists attach it with the query params
+    const renderPost = (resolvedPost) => {
 
       const post = resolvedPost
   
       const deleteHandler = (postId) => { 
-        consentModalVisibility.setIsModalVisible(true)
-        consentDetails.consentMessage.setMessage('Are you sure you to delete this post?')
-        consentDetails.consentValue.setValue({key: 'posts', value: postId, option: true, redirect: redirectTo})   // refer to Consentmodal.jsx for explaination
+        console.log('Deleting Post...')
+        submit(null, {method: 'DELETE', action: `/posts/${postId}`, replace: true})
        }
 
       return (
@@ -36,7 +26,7 @@ export default function Post() {
             <p>{post.body}</p>
           </div>
           <div className={`${style['sub-container']} ${style['btn-box']}`}>
-            <Link to={`..${redirectTo}`}>Back</Link>
+            <Link to={`..`}>Back</Link>
             <a onClick={() =>deleteHandler(post.id)}>Delete</a>
             <Link to='edit'>Edit</Link>
           </div>

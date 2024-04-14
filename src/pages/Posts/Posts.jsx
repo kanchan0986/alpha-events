@@ -1,7 +1,6 @@
 import React, { Suspense, useState } from 'react'
-import { useLoaderData, Link, useSearchParams, Await } from 'react-router-dom'
+import { useLoaderData, Link, useSearchParams, Await, useSubmit } from 'react-router-dom'
 import style from './Posts.module.css'
-import useCustomContext from '../../hooks/useCustomContext'
 import SearchForm from '../../components/SearchForm/SearchForm'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
 
@@ -15,7 +14,7 @@ export default function Posts() {
 
   const [ searchParams ] = useSearchParams()
 
-  const { consentModalVisibility, consentDetails } = useCustomContext()
+  const submit = useSubmit()
 
 
   const listPosts = (resolvedPostsData) => {    // Awaiting function to create listing component by getting the resolved data from the Await component's children 
@@ -66,9 +65,7 @@ export default function Posts() {
 
  const deleteHandler = (e, postId) => {
   e.preventDefault()
-  consentModalVisibility.setIsModalVisible(true)
-  consentDetails.consentMessage.setMessage('Are you sure you to delete this post?')
-  consentDetails.consentValue.setValue({key: 'posts', value: postId, option: true, redirect: `?${searchParams}`})   // refer to Consentmodal.jsx for explaination
+  submit(null, {method: 'DELETE', action: `/posts/${postId}`, replace: true})
 }
 
 

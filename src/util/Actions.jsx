@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom"
 
-export const modifyEventAction = ({setIsSuccessModalVisible, setSuccessMessage}) => async ({request, params}) => {
+export const modifyEventAction = async ({request, params}) => {
 
     const formData = await request.formData()
 
@@ -32,15 +32,12 @@ export const modifyEventAction = ({setIsSuccessModalVisible, setSuccessMessage})
     }
 
     console.log(response)
-    setIsSuccessModalVisible(true)
-    setSuccessMessage(`Event ${method === 'PATCH' ? 'Edited' : 'Created'}!`)
+    console.log('Event Modified')
     return redirect('/events')
 }
 
-export const deleteEvent = ({setIsSuccessModalVisible, setSuccessMessage}) => async ({request, params}) => {
+export const deleteEvent = async ({params}) => {
     const id = params.id
-    const formData = await request.formData()
-    const redirectionPath = formData.get('redirect')
     const response = await fetch(`http://localhost:8080/events/${id}`, {
         method: 'DELETE'
     })
@@ -48,16 +45,11 @@ export const deleteEvent = ({setIsSuccessModalVisible, setSuccessMessage}) => as
         // 
     }
     console.log(response)
-    setIsSuccessModalVisible(true)
-    setSuccessMessage('Event Deleted!')
-    if(redirectionPath === '/'){
-        return redirect(redirectionPath)
-    }else{
-        return redirect('/events')
-    }
+    console.log('Event Deleted')
+    return redirect('/events')
 }
 
-export const modifyPostAction = ({setIsSuccessModalVisible, setSuccessMessage}) => async ({request, params}) => {
+export const modifyPostAction = async ({request, params}) => {
 
     const formData = await request.formData()
 
@@ -88,15 +80,12 @@ export const modifyPostAction = ({setIsSuccessModalVisible, setSuccessMessage}) 
     }
 
     console.log(response)
-    setIsSuccessModalVisible(true)
-    setSuccessMessage(`Post ${method === 'PUT' ? 'Edited' : 'Created'}!`)
+    console.log('Post Modified')
     return redirect('/posts')
 }
 
-export const deletePost = ({setIsSuccessModalVisible, setSuccessMessage}) => async ({request, params}) => {
+export const deletePost = async ({params}) => {
     const id = params.id
-    const formData = await request.formData()
-    const redirectionPath = formData.get('redirect')
     const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
         method: 'DELETE'
     })
@@ -104,23 +93,17 @@ export const deletePost = ({setIsSuccessModalVisible, setSuccessMessage}) => asy
         // 
     }
     console.log(response)
-    setIsSuccessModalVisible(true)
-    setSuccessMessage('Post Deleted!')
-    if(redirectionPath === '/'){
-        return redirect(redirectionPath)
-    }else{
-        return redirect('/posts')
-    }
+    console.log('Post Deleted')
+
+    return redirect('/posts')
 }
 
-export const registerAction = ({setIsSuccessModalVisible, setSuccessMessage}) => async ({request}) => {
+export const registerAction = async ({request}) => {
     const formData = await request.formData()
     const newsletter = formData.get('newsletter')
     if(newsletter.trim() !== ''){
         console.log(newsletter)
         // Store the newsletter data
-        setIsSuccessModalVisible(true)
-        setSuccessMessage('Email Registered!')
     }
     return null
-}                    // Note** This is a curried function
+}
