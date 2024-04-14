@@ -11,7 +11,7 @@ export default function PrimaryHeader( { combinedData }) {
         <Link to='/'>Alpha Events</Link>
       </div>
       <div className={`${style['sub-container']} ${style.middle}`}>
-        <CombinedSearch combinedData={combinedData} />
+        {/* <CombinedSearch /> */}
         <ul className={style.menu}>
           <li>
             <NavLink to='events' className={({isActive}) => isActive ? style.active : ''}>Events<span>&#11206;</span></NavLink>

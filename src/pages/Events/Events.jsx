@@ -64,7 +64,7 @@ export default function Events() {
 
   const deleteHandler = (e, eventId) => {
     e.preventDefault()
-    submit(null, {method: 'DELETE', action: `/events/${eventId}`, replace: true })
+    submit(null, {method: 'DELETE', action: `/events/${eventId}`})
  }
 
   const eventsList = filterData.map(event => {

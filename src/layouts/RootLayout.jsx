@@ -17,6 +17,7 @@ export default function RootLayout() {
         {/* {successModalVisibility.isModalVisible && <SuccessModal />}
         {consentModalVisibility.isModalVisible && <ConsentModal />} */}
         {/* <PrimaryHeader combinedData={ { events, posts }} /> */}
+        <PrimaryHeader />
         <Outlet />
         <PrimaryFooter />
     </>

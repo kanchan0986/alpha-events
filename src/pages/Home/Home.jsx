@@ -1,17 +1,14 @@
 import React, { Suspense } from 'react'
 import style from './Home.module.css'
-import useCustomContext from '../../hooks/useCustomContext'
 import RegisterForm from '../../components/RegisterForm/RegisterForm'
-import { Await, Link, useRouteLoaderData } from 'react-router-dom'
+import { Await, Link, useRouteLoaderData, useSubmit } from 'react-router-dom'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
 
 export default function Home() {
 
   const { events, posts } = useRouteLoaderData('root')
 
-  const { consentModalVisibility, consentDetails } = useCustomContext()
-
-  
+  const submit = useSubmit()
 
   const listEvents = (resolvedEventsData) => {    // Awaiting function to create listing component by getting the resolved data from the Await component's children
 
@@ -19,9 +16,7 @@ export default function Home() {
     
     const eventDeleteHandler = (e, eventId) => {
         e.preventDefault()
-        consentModalVisibility.setIsModalVisible(true)
-        consentDetails.consentMessage.setMessage('Are you sure you to delete this event?')
-        consentDetails.consentValue.setValue({key: 'events', value: eventId, option: false, redirect: '/'})   // refer to Consentmodal.jsx for explaination
+        submit(null, {method: 'DELETE', action: `/events/${eventId}`, replace: true })
     }
 
 
@@ -66,9 +61,7 @@ export default function Home() {
 
     const postDeleteHandler = (e, postId) => {
         e.preventDefault()
-        consentModalVisibility.setIsModalVisible(true)
-        consentDetails.consentMessage.setMessage('Are you sure you to delete this post?')
-        consentDetails.consentValue.setValue({key: 'posts', value: postId, option: false, redirect: '/'})   // refer to Consentmodal.jsx for explaination
+        submit(null, {method: 'DELETE', action: `/posts/${postId}`, replace: true})
     }
 
 
