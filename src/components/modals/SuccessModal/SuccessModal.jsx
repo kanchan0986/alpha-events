@@ -1,23 +1,23 @@
 import React from 'react'
-import useCustomContext from '../../../hooks/useCustomContext'
 import style from './SuccessModal.module.css'
-import Portal from '../../Portal/Portal'
+import { useLocation, useSubmit } from 'react-router-dom'
 
-export default function SuccessModal() {
+export default function SuccessModal({ message }) {
 
-    const { successModalVisibility, successMessage } = useCustomContext()
+  const submit = useSubmit()
 
-    const handleClose = () => { 
-        successMessage.setMessage('')
-        successModalVisibility.setIsModalVisible(false)
-     }
+  const pathName = useLocation().pathname
+
+  const handleClick = () => { 
+    submit(null, {method: 'POST', action: `${pathName}/success`, replace: true})
+   }
 
   return (
-    <Portal handleClose={handleClose} >
-        <div className={style.container}>
-            <h2>{successMessage.message}</h2>
-            <button onClick={handleClose}>Close</button>
+    <div className={style.overlay}>
+        <div className={style.modal}>
+            <h2>{message}</h2>
+            <button onClick={handleClick}>Close</button>
         </div>
-    </Portal>
+    </div>
   )
 }

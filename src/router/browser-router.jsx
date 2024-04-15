@@ -12,7 +12,8 @@ import NewEvent from '../pages/NewEvent/NewEvent'
 import EditEvent from '../pages/EditEvent/EditEvent'
 import RootLayout from '../layouts/RootLayout'
 import { loadEvent, loadEvents, loadHomepage, loadPost, loadPosts } from '../util/Loaders'
-import { deleteEvent, deletePost, modifyEventAction, modifyPostAction, registerAction } from '../util/Actions'
+import { deleteEvent, deletePost, modalClosureAction, modifyEventAction, modifyPostAction, registerAction } from '../util/Actions'
+import SuccessModal from '../components/modals/SuccessModal/SuccessModal'
 
 
 const router = createBrowserRouter([
@@ -20,7 +21,10 @@ const router = createBrowserRouter([
         {index: true, element:<Home />, id: 'root', loader: loadHomepage,},
         {path: 'events', children: [
             {index: true, element: <Events />, loader: loadEvents},
-            {path: 'new', element: <NewEvent />, action: modifyEventAction},
+            {path: 'new', children: [
+                {index: true, element: <NewEvent />, action: modifyEventAction },
+                {path: 'success', element: <SuccessModal />, action: modalClosureAction}
+            ]},
             {path: ':id', id: 'event', loader: loadEvent, action: deleteEvent, children: [
                 {index: true, element: <Event />},
                 {path: 'edit', element: <EditEvent />, action: modifyEventAction}

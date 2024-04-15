@@ -41,8 +41,7 @@ export const modifyEventAction = async ({request, params}) => {
         console.log('Event Modified')
         return redirect(`/events/${params.id}`)
     } else {
-        console.log('Event Created')
-        return redirect('/events')
+        return redirect('/events/new?modal=success') // redirecting to /events/new with modal-->success as a searchParams
     }
 }
 
@@ -160,4 +159,9 @@ export const registerAction = async ({request}) => {
         // Store the newsletter data
     }
     return null
+}
+
+
+export const modalClosureAction = () => {
+    return redirect('../..')
 }

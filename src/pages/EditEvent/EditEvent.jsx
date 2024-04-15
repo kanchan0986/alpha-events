@@ -2,6 +2,7 @@ import React from 'react'
 import style from './EditEvent.module.css'
 import EventForm from '../../components/EventForm/EventForm'
 import { Await, useRouteLoaderData } from 'react-router-dom'
+import SuccessModal from '../../components/modals/SuccessModal/SuccessModal'
 
 export default function EditEvent() {
 
@@ -19,6 +20,7 @@ export default function EditEvent() {
           )
         }}
       </Await>
+      <SuccessModal />
     </section>
   )
 }
