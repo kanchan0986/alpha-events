@@ -1,14 +1,43 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import style from './Home.module.css'
 import RegisterForm from '../../components/RegisterForm/RegisterForm'
 import { Await, Link, useLoaderData, useSubmit } from 'react-router-dom'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
+import useCustomContext from '../../hooks/useCustomContext'
 
 export default function Home() {
 
   const { events, posts } = useLoaderData()
 
+  const { events: eventsLinks, posts: postsLinks } = useCustomContext().backLinks
+
   const submit = useSubmit()
+
+
+  /* -------------------------- Combined Search Logic ------------------------- */
+
+
+  const resolvedEvents = Promise.resolve(events) // Promise came from Loaders which has to be resolved
+
+  const resolvedPosts = Promise.resolve(posts) // Promise came from Loaders which has to be resolved
+
+  useEffect(() => {
+
+      resolvedEvents.then(data => {
+          eventsLinks.setEventLinks([...data])
+      })
+      
+      resolvedPosts.then(data => {
+          postsLinks.setPostLinks([...data])
+      })
+
+  }, []) // Set the resolved promise data to the seperate contexts which can be used in combined search functionality
+
+
+
+  /* ----------------------------- Events Listing ----------------------------- */
+
+
 
   const listEvents = (resolvedEventsData) => {    // Awaiting function to create listing component by getting the resolved data from the Await component's children
 
@@ -51,7 +80,7 @@ export default function Home() {
    }
 
 
-
+  /* ----------------------------- Posts Listing ----------------------------- */
 
 
 

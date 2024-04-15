@@ -4,14 +4,14 @@ import RegisterForm from '../../RegisterForm/RegisterForm'
 import { Link, NavLink } from 'react-router-dom'
 import CombinedSearch from '../../CombinedSearch/CombinedSearch'
 
-export default function PrimaryHeader( { combinedData }) {
+export default function PrimaryHeader() {
   return (
     <nav className={style.container}>
       <div className={`${style['sub-container']} ${style.first}`}>
         <Link to='/'>Alpha Events</Link>
       </div>
       <div className={`${style['sub-container']} ${style.middle}`}>
-        {/* <CombinedSearch /> */}
+        <CombinedSearch />
         <ul className={style.menu}>
           <li>
             <NavLink to='events' className={({isActive}) => isActive ? style.active : ''}>Events<span>&#11206;</span></NavLink>
