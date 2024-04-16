@@ -1,14 +1,4 @@
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(135, 207, 235, 0.453);
-  
-}
-  
-  .modal {
+  .container {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -24,7 +14,7 @@
   }
   
 
-  .modal button {
+  .container button {
     padding: 0.4rem 0.2rem;
     width: 6rem;
     background: skyblue;
@@ -37,12 +27,12 @@
     border: none;
 }
 
-.modal button:hover, .container button:active {
+.container button:hover, .container button:active {
   background: steelblue;
   color: white;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
 }
 
-.modal button:not(:last-of-type) {
+.container button:not(:last-of-type) {
     margin-right: 1rem;
 }
