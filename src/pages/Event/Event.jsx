@@ -1,21 +1,25 @@
 import React, { Suspense } from 'react'
-import { Link, useRouteLoaderData, Await, useSubmit } from 'react-router-dom'
+import { Link, useRouteLoaderData, Await, useSearchParams, useNavigate } from 'react-router-dom'
 import style from './Event.module.css'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
+import ConsentModal from '../../components/modals/ConsentModal/ConsentModal'
 
 export default function Event() {
 
     const { event } = useRouteLoaderData('event')
 
-    const submit = useSubmit()
+    const [ searchParams ] = useSearchParams()
+
+    const modal = searchParams?.get('modal') || null
+
+    const navigate = useNavigate()
 
     const renderEvent = (resolvedEvent) => { 
   
       const event = resolvedEvent
   
       const deleteHandler = (eventId) => { 
-        console.log('Deleting Event...')
-        submit(null, {method: 'DELETE', action: `/events/${eventId}`, replace: true })
+        navigate(`/events/${eventId}?modal=consent`, { state: { type: 'events', id: eventId } }) // Take Consent by opening a consent modal
        }
 
       return (
@@ -36,6 +40,7 @@ export default function Event() {
             <a onClick={() => deleteHandler(event.id)}>Delete</a>
             <Link to='edit'>Edit</Link>
           </div>
+          {modal && <ConsentModal message='Are you sure?' />}  {/************** modal is visible only if modal has a value  **********/}
         </>
 
       )

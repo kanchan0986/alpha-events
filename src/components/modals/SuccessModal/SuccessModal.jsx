@@ -1,16 +1,14 @@
 import React from 'react'
 import style from './SuccessModal.module.css'
 import Portal from '../../Portal/Portal'
-import { useLocation, useSubmit } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-export default function SuccessModal({ message }) {
+export default function SuccessModal({ message, redirect }) {
 
-  const submit = useSubmit()
+  const navigate = useNavigate()
 
-  const pathName = useLocation().pathname
-
-  const handleClose = () => { 
-    submit(null, {method: 'POST', action: `${pathName}/success`, replace: true})
+  const handleClose = () => {
+    navigate(redirect, { replace: true }) // get a redirection path as a prop and replace the form history
    }
 
   return (

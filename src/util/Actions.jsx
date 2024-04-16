@@ -64,8 +64,7 @@ export const deleteEvent = async ({request, params}) => {
         console.log('Event Deleted')
         return redirect(pathName)
     } else {
-        console.log('Event Deleted')
-        return redirect('/events')
+        return redirect('/events?modal=success')
     }
 
 }
@@ -158,9 +157,4 @@ export const registerAction = async ({request}) => {
         // Store the newsletter data
     }
     return null
-}
-
-
-export const modalClosureAction = () => {
-    return redirect('../..')
 }

@@ -1,8 +1,10 @@
 import React, { Suspense, useState } from 'react'
-import { Await, Link, useLoaderData, useSearchParams, useSubmit } from 'react-router-dom'
+import { Await, Link, useLoaderData, useNavigate, useSearchParams } from 'react-router-dom'
 import style from './Events.module.css'
 import SearchForm from '../../components/SearchForm/SearchForm'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
+import SuccessModal from '../../components/modals/SuccessModal/SuccessModal'
+import ConsentModal from '../../components/modals/ConsentModal/ConsentModal'
 
 export default function Events() {
 
@@ -14,7 +16,9 @@ export default function Events() {
 
   const [ searchParams ] = useSearchParams()
 
-  const submit = useSubmit()
+  const navigate = useNavigate()
+
+  const modal = searchParams?.get('modal') || null
 
 
   const listEvents = (resolvedEventsData) => {    // Awaiting function to create listing component by getting the resolved data from the Await component's children
@@ -64,7 +68,7 @@ export default function Events() {
 
   const deleteHandler = (e, eventId) => {
     e.preventDefault()
-    submit(null, {method: 'DELETE', action: `/events/${eventId}`})
+    navigate('/events?modal=consent', { state: { type: 'events', id: eventId } }) // Take Consent by opening a consent modal
  }
 
   const eventsList = filterData.map(event => {
@@ -122,6 +126,8 @@ export default function Events() {
         <div className={style['sub-container']}>
           <ul className={style['events-list']}>{eventsList}</ul>
         </div>
+        {modal === 'success' && <SuccessModal message='Event Deleted' redirect='/events' />}  {/************** modal is visible only if modal has a success value  **********/}
+        {modal === 'consent' && <ConsentModal message='Are you sure?' />}  {/************** modal is visible only if modal has a consent value  **********/}
       </>
     )
 

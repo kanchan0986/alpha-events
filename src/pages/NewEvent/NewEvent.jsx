@@ -11,7 +11,7 @@ export default function NewEvent() {
     <section className={style.container}>
       <h2>New Event</h2>
       <EventForm method='POST' />
-      {modal && <SuccessModal message='Event Created' searchParams={searchParams} />}  {/************** modal is visible only if modal has a value  **********/}
+      {modal && <SuccessModal message='Event Created' redirect='/events' />}  {/************** modal is visible only if modal has a value  **********/}
     </section>
   )
 }

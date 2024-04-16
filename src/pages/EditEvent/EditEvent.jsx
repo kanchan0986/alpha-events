@@ -20,7 +20,7 @@ export default function EditEvent() {
             <>
               <h2>Edit {resolvedEvent.title}</h2>
               <EventForm existingEvent={resolvedEvent} method='patch' />
-              {modal && <SuccessModal message='Event Modified' />}  {/************** modal is visible only if modal has a value  **********/}
+              {modal && <SuccessModal message='Event Modified' redirect='..' />}  {/************** modal is visible only if modal has a value  **********/}
             </>
           )
         }}

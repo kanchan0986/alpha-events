@@ -12,8 +12,9 @@ import NewEvent from '../pages/NewEvent/NewEvent'
 import EditEvent from '../pages/EditEvent/EditEvent'
 import RootLayout from '../layouts/RootLayout'
 import { loadEvent, loadEvents, loadHomepage, loadPost, loadPosts } from '../util/Loaders'
-import { deleteEvent, deletePost, modalClosureAction, modifyEventAction, modifyPostAction, registerAction } from '../util/Actions'
+import { deleteEvent, deletePost, modifyEventAction, modifyPostAction, registerAction } from '../util/Actions'
 import SuccessModal from '../components/modals/SuccessModal/SuccessModal'
+import ConsentModal from '../components/modals/ConsentModal/ConsentModal'
 
 
 const router = createBrowserRouter([
@@ -23,15 +24,18 @@ const router = createBrowserRouter([
             {index: true, element: <Events />, loader: loadEvents},
             {path: 'new', children: [
                 {index: true, element: <NewEvent />, action: modifyEventAction },
-                {path: 'success', element: <SuccessModal />, action: modalClosureAction}
+                {path: 'success', element: <SuccessModal />}
             ]},
             {path: ':id', id: 'event', loader: loadEvent, action: deleteEvent, children: [
                 {index: true, element: <Event />},
                 {path: 'edit', children: [
                     {index: true, element: <EditEvent />, action: modifyEventAction},
-                    {path: 'success', element: <SuccessModal />, action: modalClosureAction},
-                ]}
+                    {path: 'success', element: <SuccessModal />},
+                ]},
+                {path: 'consent', element: <ConsentModal />}
             ]},
+            {path: 'consent', element: <ConsentModal />},
+            {path: 'success', element: <SuccessModal />},
         ]},
         {path: 'posts', children: [
             {index: true, element: <Posts />, loader: loadPosts},
