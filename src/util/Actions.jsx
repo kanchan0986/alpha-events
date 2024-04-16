@@ -38,8 +38,7 @@ export const modifyEventAction = async ({request, params}) => {
     console.log(response)
 
     if(method === 'PATCH'){
-        console.log('Event Modified')
-        return redirect(`/events/${params.id}`)
+        return redirect(`/events/${params.id}/edit?modal=success`) // redirecting to /events/:id/edit with modal-->success as a searchParams
     } else {
         return redirect('/events/new?modal=success') // redirecting to /events/new with modal-->success as a searchParams
     }

@@ -27,7 +27,10 @@ const router = createBrowserRouter([
             ]},
             {path: ':id', id: 'event', loader: loadEvent, action: deleteEvent, children: [
                 {index: true, element: <Event />},
-                {path: 'edit', element: <EditEvent />, action: modifyEventAction}
+                {path: 'edit', children: [
+                    {index: true, element: <EditEvent />, action: modifyEventAction},
+                    {path: 'success', element: <SuccessModal />, action: modalClosureAction},
+                ]}
             ]},
         ]},
         {path: 'posts', children: [
