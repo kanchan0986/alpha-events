@@ -50,8 +50,7 @@ export const modifyEventAction = async ({request, params}) => {
 
 export const deleteEvent = async ({request, params}) => {
     const id = params.id
-    const formData = await request.formData()
-    const pathName = formData.get('pathName')
+    const pathName = new URL(request.url).searchParams.get('pathname')
     const response = await fetch(`http://localhost:8080/events/${id}`, {
         method: 'DELETE'
     })
@@ -61,10 +60,9 @@ export const deleteEvent = async ({request, params}) => {
     console.log(response)
 
     if(pathName){
-        console.log('Event Deleted')
-        return redirect(pathName)
+        return redirect(`${pathName}?modal=success`) // set to success modal from here with a dynamic pathname
     } else {
-        return redirect('/events?modal=success')
+        return redirect('/events?modal=success') // set to success modal from here with a fixed path as events
     }
 
 }

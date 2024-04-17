@@ -47,6 +47,8 @@ const router = createBrowserRouter([
         ]},
         {path: 'newsletter', element:<Newsletter />, action: registerAction},
         {path: 'login', element:<Login />},
+        {path: 'consent', element: <ConsentModal />},
+        {path: 'success', element: <SuccessModal />},
     ]},
 ])
 

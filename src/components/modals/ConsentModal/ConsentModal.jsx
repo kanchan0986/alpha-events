@@ -16,6 +16,8 @@ export default function ConsentModal({ message }) {
 
     const state = location.state
 
+    const { type, id, pathName } = state
+
     // const { key, value, option, redirect } = consentDetails.consentValue.value            // custom object with custom properties just to scale the functionality, redirection support and case dependent solution
 
     // const positiveConsentHandler = () => {
@@ -27,7 +29,7 @@ export default function ConsentModal({ message }) {
 
 
     const positiveConsentHandler = () => {
-        submit(null, {method: 'DELETE', action: `/${state.type}/${state.id}`, replace: true }) // state.type defines the route path and state.id defines the dynamic segment
+        submit(null, {method: 'DELETE', action: `/${type}/${id}${pathName ? `?pathname=${pathName}` : ''}`, replace: true }) // type defines the route path, id defines the dynamic segment and pathName is being sent as an optional query parameter and has the redirection path from the component where it is being called
     }
 
     const negetiveConsentHandler = () => {

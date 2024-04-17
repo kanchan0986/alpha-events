@@ -1,9 +1,11 @@
 import React, { Suspense, useEffect } from 'react'
 import style from './Home.module.css'
 import RegisterForm from '../../components/RegisterForm/RegisterForm'
-import { Await, Link, useLoaderData, useSubmit } from 'react-router-dom'
+import { Await, Link, useLoaderData, useNavigate, useSearchParams, useSubmit } from 'react-router-dom'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
 import useCustomContext from '../../hooks/useCustomContext'
+import SuccessModal from '../../components/modals/SuccessModal/SuccessModal'
+import ConsentModal from '../../components/modals/ConsentModal/ConsentModal'
 
 export default function Home() {
 
@@ -12,6 +14,12 @@ export default function Home() {
   const { events: eventsLinks, posts: postsLinks } = useCustomContext().backLinks
 
   const submit = useSubmit()
+
+  const [ searchParams ] = useSearchParams()
+
+  const modal = searchParams?.get('modal') || null
+
+  const navigate = useNavigate()
 
 
   /* -------------------------- Combined Search Logic ------------------------- */
@@ -45,7 +53,7 @@ export default function Home() {
     
     const eventDeleteHandler = (e, eventId) => {
         e.preventDefault()
-        submit({pathName: '/'}, {method: 'DELETE', action: `/events/${eventId}`})
+        navigate('/?modal=consent', { state: { type: 'events', id: eventId, pathName: '/' } }) // Take Consent by opening a consent modal
     }
 
 
@@ -75,6 +83,8 @@ export default function Home() {
           <Link to='events'>Check All Events</Link>
           <Link to='events/new'>Add New Event</Link>
         </div>
+        {modal === 'success' && <SuccessModal message='Event Deleted' redirect='/' />}  {/************** modal is visible only if modal has a success value  **********/}
+        {modal === 'consent' && <ConsentModal message='Are you sure?' />}  {/************** modal is visible only if modal has a consent value  **********/}
       </>
     )
    }
