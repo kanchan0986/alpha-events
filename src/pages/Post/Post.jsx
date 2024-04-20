@@ -1,21 +1,25 @@
 import React, { Suspense } from 'react'
 import style from './Post.module.css'
-import { Link, useRouteLoaderData, Await, useSubmit } from 'react-router-dom'
+import { Link, useRouteLoaderData, Await, useNavigate, useSearchParams } from 'react-router-dom'
+import ConsentModal from '../../components/modals/ConsentModal/ConsentModal'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
 
 export default function Post() {
 
     const { post } = useRouteLoaderData('post')
 
-    const submit = useSubmit()
+    const [ searchParams ] = useSearchParams()
+
+    const modal = searchParams?.get('modal') || null
+
+    const navigate = useNavigate()
 
     const renderPost = (resolvedPost) => {
 
       const post = resolvedPost
   
-      const deleteHandler = (postId) => { 
-        console.log('Deleting Post...')
-        submit(null, {method: 'DELETE', action: `/posts/${postId}`, replace: true})
+      const deleteHandler = (postId) => {
+        navigate(`/posts/${postId}?modal=consent`, { state: { type: 'posts', id: postId } }) // Take Consent by opening a consent modal
        }
 
       return (
@@ -30,6 +34,7 @@ export default function Post() {
             <a onClick={() =>deleteHandler(post.id)}>Delete</a>
             <Link to='edit'>Edit</Link>
           </div>
+          {modal && <ConsentModal message='Are you sure?' />}  {/************** modal is visible only if modal has a value  **********/}
         </>
 
       )

@@ -22,20 +22,11 @@ const router = createBrowserRouter([
         {index: true, element:<Home />, id: 'root', loader: loadHomepage,},
         {path: 'events', children: [
             {index: true, element: <Events />, loader: loadEvents},
-            {path: 'new', children: [
-                {index: true, element: <NewEvent />, action: modifyEventAction },
-                {path: 'success', element: <SuccessModal />}
-            ]},
+            {path: 'new', element: <NewEvent />, action: modifyEventAction },
             {path: ':id', id: 'event', loader: loadEvent, action: deleteEvent, children: [
                 {index: true, element: <Event />},
-                {path: 'edit', children: [
-                    {index: true, element: <EditEvent />, action: modifyEventAction},
-                    {path: 'success', element: <SuccessModal />},
-                ]},
-                {path: 'consent', element: <ConsentModal />}
+                {path: 'edit', element: <EditEvent />, action: modifyEventAction},
             ]},
-            {path: 'consent', element: <ConsentModal />},
-            {path: 'success', element: <SuccessModal />},
         ]},
         {path: 'posts', children: [
             {index: true, element: <Posts />, loader: loadPosts},
@@ -47,8 +38,6 @@ const router = createBrowserRouter([
         ]},
         {path: 'newsletter', element:<Newsletter />, action: registerAction},
         {path: 'login', element:<Login />},
-        {path: 'consent', element: <ConsentModal />},
-        {path: 'success', element: <SuccessModal />},
     ]},
 ])
 

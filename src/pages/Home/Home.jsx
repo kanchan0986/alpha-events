@@ -100,7 +100,7 @@ export default function Home() {
 
     const postDeleteHandler = (e, postId) => {
         e.preventDefault()
-        submit({pathName: '/'}, {method: 'DELETE', action: `/posts/${postId}`})
+        navigate('/?modal=consent', { state: { type: 'posts', id: postId, pathName: '/' } }) // Take Consent by opening a consent modal
     }
 
 
@@ -130,6 +130,8 @@ export default function Home() {
           <Link to='posts'>Check All Posts</Link>
           <Link to='posts/new'>Add New Post</Link>
         </div>
+        {modal === 'success' && <SuccessModal message='Post Deleted' redirect='/' />}  {/************** modal is visible only if modal has a success value  **********/}
+        {modal === 'consent' && <ConsentModal message='Are you sure?' />}  {/************** modal is visible only if modal has a consent value  **********/}
       </>
 
     )

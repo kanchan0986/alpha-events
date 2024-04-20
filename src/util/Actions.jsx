@@ -104,13 +104,13 @@ export const modifyPostAction = async ({request, params}) => {
     }
 
     console.log(response)
+
     if(method === 'PUT'){
-        console.log('Post Modified')
-        return redirect(`/posts/${params.id}`)
+        return redirect(`/posts/${params.id}/edit?modal=success`) // redirecting to /posts/:id/edit with modal-->success as a searchParams
     } else {
-        console.log('Post Created')
-        return redirect('/posts')
+        return redirect('/posts/new?modal=success') // redirecting to /posts/new with modal-->success as a searchParams
     }
+
 }
 
 
@@ -121,8 +121,7 @@ export const modifyPostAction = async ({request, params}) => {
 
 export const deletePost = async ({request, params}) => {
     const id = params.id
-    const formData = await request.formData()
-    const pathName = formData.get('pathName')
+    const pathName = new URL(request.url).searchParams.get('pathname')
     const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
         method: 'DELETE'
     })
@@ -132,11 +131,9 @@ export const deletePost = async ({request, params}) => {
     console.log(response)
 
     if(pathName){
-        console.log('Post Deleted')
-        return redirect(pathName)
+        return redirect(`${pathName}?modal=success`) // set to success modal from here with a dynamic pathname
     } else {
-        console.log('Post Deleted')
-        return redirect('/posts')
+        return redirect('/posts?modal=success') // set to success modal from here with a fixed path as posts
     }
 
 }

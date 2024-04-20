@@ -1,8 +1,10 @@
 import React, { Suspense, useState } from 'react'
-import { useLoaderData, Link, useSearchParams, Await, useSubmit } from 'react-router-dom'
+import { useLoaderData, Link, useSearchParams, Await, useNavigate } from 'react-router-dom'
 import style from './Posts.module.css'
 import SearchForm from '../../components/SearchForm/SearchForm'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
+import SuccessModal from '../../components/modals/SuccessModal/SuccessModal'
+import ConsentModal from '../../components/modals/ConsentModal/ConsentModal'
 
 export default function Posts() {
 
@@ -14,7 +16,9 @@ export default function Posts() {
 
   const [ searchParams ] = useSearchParams()
 
-  const submit = useSubmit()
+  const navigate = useNavigate()
+
+  const modal = searchParams?.get('modal') || null
 
 
   const listPosts = (resolvedPostsData) => {    // Awaiting function to create listing component by getting the resolved data from the Await component's children 
@@ -65,7 +69,7 @@ export default function Posts() {
 
  const deleteHandler = (e, postId) => {
   e.preventDefault()
-  submit(null, {method: 'DELETE', action: `/posts/${postId}`})
+  navigate('/posts?modal=consent', { state: { type: 'posts', id: postId } }) // Take Consent by opening a consent modal
 }
 
 
@@ -129,6 +133,8 @@ export default function Posts() {
       <div className={style['posts-container']}>
         <ul className={style['posts-list']}>{postsList}</ul>
       </div>
+      {modal === 'success' && <SuccessModal message='Post Deleted' redirect='/posts' />}  {/************** modal is visible only if modal has a success value  **********/}
+      {modal === 'consent' && <ConsentModal message='Are you sure?' />}  {/************** modal is visible only if modal has a consent value  **********/}
     </>
 
   )
