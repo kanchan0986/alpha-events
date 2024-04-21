@@ -1,12 +1,9 @@
 import React from 'react'
 import Portal from '../../Portal/Portal'
-// import useCustomContext from '../../../hooks/useCustomContext'
 import style from './ConsentModal.module.css'
 import { useSubmit, useNavigate, useLocation } from 'react-router-dom'
 
 export default function ConsentModal({ message }) {
-
-    // const { consentDetails } = useCustomContext()
 
     const navigate = useNavigate()
 
@@ -17,15 +14,6 @@ export default function ConsentModal({ message }) {
     const state = location.state
 
     const { type, id, pathName } = state
-
-    // const { key, value, option, redirect } = consentDetails.consentValue.value            // custom object with custom properties just to scale the functionality, redirection support and case dependent solution
-
-    // const positiveConsentHandler = () => {
-    //     submit(redirect ? { redirect: redirect } : null, {method: 'DELETE', action: `/${key}/${value}`}) // if redirect is present then pass redirect as an object to actions file; key is the route and value is params
-    //     if(option){
-    //         navigate(`/${key}${option ? redirect : ''}`)  // if option is true navigate to key -> route and if redirect -> params is present then attach parans with the route
-    //     }
-    //  }
 
 
     const positiveConsentHandler = () => {
