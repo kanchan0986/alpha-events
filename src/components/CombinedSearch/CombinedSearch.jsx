@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import useCustomContext from '../../hooks/useCustomContext'
 import style from './CombinedSearch.module.css'
 
-export default function CombinedSearch( { combinedData }) {
+export default function CombinedSearch() {
 
     const [searchKey, setSearchKey] = useState('')
 
@@ -13,6 +13,8 @@ export default function CombinedSearch( { combinedData }) {
 
     const eventsLinks = events.eventLinks
     const postsLinks = posts.postLinks
+
+    const pathName = useLocation().pathname
     
     
     useEffect(() => {
@@ -39,7 +41,7 @@ export default function CombinedSearch( { combinedData }) {
 
     const suggestionList = filterArr.map(suggestion => {
         return (
-            <Link key={suggestion.id} to={suggestion.id} onClick={submitHandler}>{suggestion.title.slice(0, 55)}</Link>
+            <Link key={suggestion.id} to={suggestion.id} onClick={submitHandler} state={{ redirectPath: pathName }}>{suggestion.title.slice(0, 55)}</Link>
         )
     })
 

@@ -23,9 +23,9 @@ export default function Events() {
 
   const listEvents = (resolvedEventsData) => {    // Awaiting function to create listing component by getting the resolved data from the Await component's children
 
-  //////////////////// Search Logic /////////////////////
+    //////////////////// Search Logic on Events page /////////////////////
 
-  const redirectedKey = searchParams.get('keyword')  // getting back the search keyword
+  const redirectedKey = searchParams?.get('keyword') // getting back the search keyword
   
   const keyUpHandler = (searchKey) => {
     const searchValue = resolvedEventsData.filter(event => event.title.toLowerCase().includes(searchKey.toLowerCase()))
@@ -35,7 +35,7 @@ export default function Events() {
 
 
 
-    //////////////////// Filteration Logic /////////////////////
+    //////////////////// Filteration Logic on Events page /////////////////////
 
   const filterParams = searchParams.get('filter')
 
@@ -74,7 +74,7 @@ export default function Events() {
   const eventsList = filterData.map(event => {
     return (
       <li className={style.event} key={event.id}>
-        <Link to={event.id} state={{ redirect: `?${searchParams}`, searchKeyword: searchKeyword }}>
+        <Link to={event.id} state={{ redirect: `?${searchParams}`, searchKeyword: searchKeyword.trim() }}> 
           <img src={event.image} />
           <div className={style['event-desc']}>
             <h4>{event.title}</h4>

@@ -23,7 +23,7 @@ export default function Posts() {
 
   const listPosts = (resolvedPostsData) => {    // Awaiting function to create listing component by getting the resolved data from the Await component's children 
 
-  //////////////////// Search Logic /////////////////////
+  //////////////////// Search Logic on Posts Page /////////////////////
 
   const redirectedKey = searchParams.get('keyword')  // getting back the search keyword
   
@@ -34,7 +34,7 @@ export default function Posts() {
    }
 
 
-  //////////////////// Filteration Logic /////////////////////
+  //////////////////// Filteration Logic on Posts Page /////////////////////
 
 
  const filterParam = searchParams.get('filter')
@@ -76,7 +76,7 @@ export default function Posts() {
   const postsList = filterData.map(post => {
     return (
       <li className={style.post} key={post.id}>
-        <Link to={`${post.id}`} state={{ paramsValue: `?${searchParams}`, searchKeyword: searchKeyword }}  >
+        <Link to={`${post.id}`} state={{ redirect: `?${searchParams}`, searchKeyword: searchKeyword.trim() }}  >
           <div className={style['post-desc']}>
             <span className={style['userId']}>Grade: {post.userId}</span>
             <div>

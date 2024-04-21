@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import { Link, useRouteLoaderData, Await, useSearchParams, useNavigate } from 'react-router-dom'
+import { Link, useRouteLoaderData, Await, useSearchParams, useNavigate, useLocation } from 'react-router-dom'
 import style from './Event.module.css'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
 import ConsentModal from '../../components/modals/ConsentModal/ConsentModal'
@@ -13,6 +13,18 @@ export default function Event() {
     const modal = searchParams?.get('modal') || null
 
     const navigate = useNavigate()
+
+    const location = useLocation()
+    
+    const redirectPath = location.state?.redirectPath || '' // state set from combined search
+
+    const redirect = location.state?.redirect || '' // state set from events search
+
+    const searchKeyword = location.state?.searchKeyword || '' // state set from events search
+
+    const redirectTo = `${redirect}${searchKeyword && `&keyword=${searchKeyword}`}`  // if search keyword exists attach it with the query params
+
+
 
     const renderEvent = (resolvedEvent) => { 
   
@@ -36,7 +48,7 @@ export default function Event() {
             <p>{event.description}</p>
           </div>
           <div className={`${style['sub-container']} ${style['btn-box']}`}>
-            <Link to={`..`}>Back</Link>
+            <Link to={redirectPath ? redirectPath : `..${redirectTo}`}>Back</Link>
             <a onClick={() => deleteHandler(event.id)}>Delete</a>
             <Link to='edit'>Edit</Link>
           </div>
