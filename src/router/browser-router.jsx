@@ -13,8 +13,6 @@ import EditEvent from '../pages/EditEvent/EditEvent'
 import RootLayout from '../layouts/RootLayout'
 import { loadEvent, loadEvents, loadHomepage, loadPost, loadPosts } from '../util/Loaders'
 import { deleteEvent, deletePost, modifyEventAction, modifyPostAction, registerAction } from '../util/Actions'
-import SuccessModal from '../components/modals/SuccessModal/SuccessModal'
-import ConsentModal from '../components/modals/ConsentModal/ConsentModal'
 
 
 const router = createBrowserRouter([

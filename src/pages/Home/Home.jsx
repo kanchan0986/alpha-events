@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from 'react'
 import style from './Home.module.css'
 import RegisterForm from '../../components/RegisterForm/RegisterForm'
-import { Await, Link, useLoaderData, useNavigate, useSearchParams, useSubmit } from 'react-router-dom'
+import { Await, Link, useLoaderData, useNavigate, useSearchParams } from 'react-router-dom'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
 import useCustomContext from '../../hooks/useCustomContext'
 import SuccessModal from '../../components/modals/SuccessModal/SuccessModal'
@@ -12,8 +12,6 @@ export default function Home() {
   const { events, posts } = useLoaderData()
 
   const { events: eventsLinks, posts: postsLinks } = useCustomContext().backLinks
-
-  const submit = useSubmit()
 
   const [ searchParams ] = useSearchParams()
 
