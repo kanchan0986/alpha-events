@@ -10,6 +10,7 @@ import Newsletter from '../pages/Newsletter/Newsletter'
 import Login from '../pages/Login/Login'
 import NewEvent from '../pages/NewEvent/NewEvent'
 import EditEvent from '../pages/EditEvent/EditEvent'
+import Error from '../pages/Error/Error' 
 import RootLayout from '../layouts/RootLayout'
 import { loadEvent, loadEvents, loadHomepage, loadPost, loadPosts } from '../util/Loaders'
 import { deleteEvent, deletePost, modifyEventAction, modifyPostAction, registerAction } from '../util/Actions'
@@ -36,7 +37,7 @@ const router = createBrowserRouter([
         ]},
         {path: 'newsletter', element:<Newsletter />, action: registerAction},
         {path: 'login', element:<Login />},
-    ]},
+    ], errorElement: <Error />},
 ])
 
 export default router

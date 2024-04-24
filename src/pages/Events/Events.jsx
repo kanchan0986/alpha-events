@@ -139,7 +139,7 @@ export default function Events() {
       <h2>Events</h2>
       <Suspense fallback={<LoadingMessage postType='Events' />}>
         <Await resolve={events}>
-          {resolvedEventsData => listEvents(resolvedEventsData)}
+          {listEvents}
         </Await>
       </Suspense>
     </section>
