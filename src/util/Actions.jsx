@@ -34,6 +34,10 @@ export const modifyEventAction = async ({request, params}) => {
     if(!response.ok){
         // 
     }
+    
+    if(response.status === 422){
+        return response
+    }
 
     console.log(response)
 

@@ -7,7 +7,7 @@ import { useRouteError } from 'react-router-dom'
 export default function Error() {
 
   const error = useRouteError()
-
+  
   let message = 'Page Not Found'
   
   if(error.status === 500){
