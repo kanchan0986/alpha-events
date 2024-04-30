@@ -12,16 +12,17 @@ import NewEvent from '../pages/NewEvent/NewEvent'
 import EditEvent from '../pages/EditEvent/EditEvent'
 import Error from '../pages/Error/Error' 
 import RootLayout from '../layouts/RootLayout'
-import { loadEvent, loadEvents, loadHomepage, loadPost, loadPosts } from '../util/Loaders'
-import { deleteEvent, deletePost, modifyEventAction, modifyPostAction, registerAction } from '../util/Actions'
+import { loadEvent, loadEvents, loadHomepage, loadPost, loadPosts, loadRoot } from '../util/Loaders'
+import { deleteEvent, deletePost, loginAction, logoutAction, modifyEventAction, modifyPostAction, registerAction } from '../util/Actions'
+import ProtectedRoute from './routes/ProtectedRoute'
 
 
 const router = createBrowserRouter([
-    {path: '/', element:<RootLayout />, children: [
-        {index: true, element:<Home />, id: 'root', loader: loadHomepage,},
+    {path: '/', element:<RootLayout />, id: 'root', loader: loadRoot, children: [
+        {index: true, element:<Home />, loader: loadHomepage,},
         {path: 'events', children: [
             {index: true, element: <Events />, loader: loadEvents},
-            {path: 'new', element: <NewEvent />, action: modifyEventAction },
+            {path: 'new', element: <ProtectedRoute> <NewEvent /> </ProtectedRoute>, action: modifyEventAction },
             {path: ':id', id: 'event', loader: loadEvent, action: deleteEvent, children: [
                 {index: true, element: <Event />},
                 {path: 'edit', element: <EditEvent />, action: modifyEventAction},
@@ -36,7 +37,8 @@ const router = createBrowserRouter([
             ]}
         ]},
         {path: 'newsletter', element:<Newsletter />, action: registerAction},
-        {path: 'login', element:<Login />},
+        {path: 'login', element:<Login />, action: loginAction},
+        {path: 'logout', action: logoutAction},
     ], errorElement: <Error />},
 ])
 

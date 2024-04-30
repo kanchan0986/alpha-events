@@ -86,11 +86,16 @@
     padding: 1.5rem 0.5rem;
 }
 
-.last a{
+.last a, .last .logout{
     padding: 1.5rem 0.5rem;
     display: inline-block;
     min-width: 90px;
     text-align: center;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    background: skyblue;
+    cursor: pointer;
 }
 
 .search-form input{
@@ -106,7 +111,7 @@
     font-size: inherit;
 }
 
-.active, .middle a:hover, .middle a:active, .last a:active, .last a:hover {
+.active, .middle a:hover, .middle a:active, .last a:active, .last a:hover, .last .logout:hover {
     background: #64aecc;
     color: white;
 }

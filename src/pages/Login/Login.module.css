@@ -1,0 +1,10 @@
+.container {
+    padding-inline: 10rem;
+    padding-bottom: 1rem;
+    padding-top: 5rem;
+    min-height: 84.9vh;
+}
+.container h2 {
+    text-align: center;
+    text-transform: capitalize;
+}

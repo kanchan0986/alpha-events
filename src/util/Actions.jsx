@@ -157,3 +157,42 @@ export const registerAction = async ({request}) => {
     }
     return null
 }
+
+
+/* -------------------------------------------------------------------------- */
+/*                       Login Action                       */
+/* -------------------------------------------------------------------------- */
+
+
+export const loginAction = async ({request}) => {
+    const formData = await request.formData()
+    const url = new URL(request.url)
+    const redirectionPath = url.searchParams.get('redirect')
+    
+    const loginData = {
+        email: formData.get('email'),
+        password: formData.get('password')
+    }
+
+    if(loginData.email.trim() !== '' && loginData.password.trim() !== '' && redirectionPath){
+        localStorage.setItem('isLoggedIn', 'true')
+        return redirect(redirectionPath)
+    }else if(loginData.email.trim() !== '' && loginData.password.trim() !== ''){
+        localStorage.setItem('isLoggedIn', 'true')
+        return redirect('/')
+    }else{
+        return null
+    }
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+/*                       Logout Action                       */
+/* -------------------------------------------------------------------------- */
+
+
+export const logoutAction = async () => {
+    localStorage.removeItem('isLoggedIn')
+    return redirect('/')
+}

@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    width: 50%;
+}
+
+.input-container input {
+    margin-top: 0.5rem;
+    padding: 0.4rem;
+}
+
+.button-container {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    width: 40%;
+}
+
+.button-container .button {
+    margin-top: 1rem;
+    text-decoration: none;
+    padding: 0.8rem 1rem;
+    background: skyblue;
+    color: black;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    margin-right: 1rem;
+    border: none;
+    width: 30%;
+    text-align: center;
+}
+
+.button-container .button:nth-child(:last-of-type) {
+    margin-right: 0;
+}
+
+.button-container .button:hover {
+    background: steelblue;
+    color: white;
+}
