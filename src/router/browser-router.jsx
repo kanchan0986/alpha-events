@@ -25,15 +25,15 @@ const router = createBrowserRouter([
             {path: 'new', element: <ProtectedRoute> <NewEvent /> </ProtectedRoute>, action: modifyEventAction },
             {path: ':id', id: 'event', loader: loadEvent, action: deleteEvent, children: [
                 {index: true, element: <Event />},
-                {path: 'edit', element: <EditEvent />, action: modifyEventAction},
+                {path: 'edit', element: <ProtectedRoute> <EditEvent /> </ProtectedRoute>, action: modifyEventAction},
             ]},
         ]},
         {path: 'posts', children: [
             {index: true, element: <Posts />, loader: loadPosts},
-            {path: 'new', element: <NewPost />, action: modifyPostAction},
+            {path: 'new', element: <ProtectedRoute> <NewPost /> </ProtectedRoute>, action: modifyPostAction},
             {path: ':id', id: 'post',  loader: loadPost, action: deletePost, children: [
                 {index: true, element: <Post />},
-                {path: 'edit', element: <EditPost />, action: modifyPostAction},
+                {path: 'edit', element: <ProtectedRoute> <EditPost /> </ProtectedRoute> , action: modifyPostAction},
             ]}
         ]},
         {path: 'newsletter', element:<Newsletter />, action: registerAction},
