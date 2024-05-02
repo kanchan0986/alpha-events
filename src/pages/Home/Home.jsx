@@ -9,7 +9,7 @@ import ConsentModal from '../../components/modals/ConsentModal/ConsentModal'
 
 export default function Home() {
 
-  const { events, posts } = useLoaderData()
+  const { eventsData, postsData } = useLoaderData()
 
   const { events: eventsLinks, posts: postsLinks } = useCustomContext().backLinks
 
@@ -23,18 +23,18 @@ export default function Home() {
   /* -------------------------- Combined Search Logic ------------------------- */
 
 
-  const resolvedEvents = Promise.resolve(events) // Promise came from Loaders which has to be resolved
+  const resolvedEvents = Promise.resolve(eventsData) // Promise came from Loaders which has to be resolved
 
-  const resolvedPosts = Promise.resolve(posts) // Promise came from Loaders which has to be resolved
+  const resolvedPosts = Promise.resolve(postsData) // Promise came from Loaders which has to be resolved
 
   useEffect(() => {
 
       resolvedEvents.then(data => {
-          eventsLinks.setEventLinks([...data])
+          eventsLinks.setEventLinks([...data.events])
       })
       
       resolvedPosts.then(data => {
-          postsLinks.setPostLinks([...data])
+          postsLinks.setPostLinks([...data.posts])
       })
 
   }, []) // Set the resolved promise data to the seperate contexts which can be used in combined search functionality
@@ -47,7 +47,7 @@ export default function Home() {
 
   const listEvents = (resolvedEventsData) => {    // Awaiting function to create listing component by getting the resolved data from the Await component's children
 
-    const events = resolvedEventsData
+    const { events, isLoggedIn } = resolvedEventsData
     
     const eventDeleteHandler = (e, eventId) => {
         e.preventDefault()
@@ -64,7 +64,7 @@ export default function Home() {
               <h4>{event.title}</h4>
               <span>{event.date}</span>
               <p>{event.description}</p>
-              <button onClick={(e) => eventDeleteHandler(e, event.id)}>Delete</button>
+              {isLoggedIn === 'true' && <button onClick={(e) => eventDeleteHandler(e, event.id)}>Delete</button>}
             </div>
           </Link>
         </li>
@@ -94,7 +94,7 @@ export default function Home() {
 
   const listPosts = (resolvedPostsData) => {     // Awaiting function to create listing component by getting the resolved data from the Await component's children
 
-    const posts = resolvedPostsData
+    const { posts, isLoggedIn } = resolvedPostsData
 
     const postDeleteHandler = (e, postId) => {
         e.preventDefault()
@@ -111,7 +111,7 @@ export default function Home() {
                 <h4>{post.title}</h4>
                 <p>{post.body}</p>
               </div>
-              <button onClick={(e) => postDeleteHandler(e, post.id)}>Delete</button>
+              {isLoggedIn === 'true' && <button onClick={(e) => postDeleteHandler(e, post.id)}>Delete</button>}
             </div>
           </Link>
         </li>
@@ -145,8 +145,8 @@ export default function Home() {
       <div className={style['sub-container']}>
         <h3>Most Popular Events</h3>
         <Suspense fallback={<LoadingMessage postType='Events' />} >
-          <Await resolve={events}>
-            {resolvedEventsData => listEvents(resolvedEventsData)}
+          <Await resolve={eventsData}>
+            {listEvents}
           </Await>
         </Suspense>
       </div>
@@ -154,8 +154,8 @@ export default function Home() {
       <div className={style['sub-container']}>
         <h3>Most Trending Posts</h3>
         <Suspense fallback={<LoadingMessage postType='Posts' />} >
-          <Await resolve={posts}>
-            {resolvedPostsData => listPosts(resolvedPostsData)}
+          <Await resolve={postsData}>
+            {listPosts}
           </Await>
         </Suspense>
       </div>

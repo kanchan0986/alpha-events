@@ -12,7 +12,7 @@ export default function Events() {
 
   const [ searchKeyword, setSearchKeyword ] = useState('')
 
-  const { events } = useLoaderData()
+  const { eventsData } = useLoaderData()
 
   const [ searchParams ] = useSearchParams()
 
@@ -28,7 +28,7 @@ export default function Events() {
   const redirectedKey = searchParams?.get('keyword') // getting back the search keyword
   
   const keyUpHandler = (searchKey) => {
-    const searchValue = resolvedEventsData.filter(event => event.title.toLowerCase().includes(searchKey.toLowerCase()))
+    const searchValue = resolvedEventsData.events.filter(event => event.title.toLowerCase().includes(searchKey.toLowerCase()))
     setSearchData(searchValue)
     setSearchKeyword(searchKey) // setting search keyword to access it back from searchParams when any redirection occurs like pressing back button or delete event
    }
@@ -41,7 +41,7 @@ export default function Events() {
 
   let filterData, alteredData
 
-  searchData.length > 0 ? alteredData = searchData : alteredData = resolvedEventsData
+  searchData.length > 0 ? alteredData = searchData : alteredData = resolvedEventsData.events
 
   if(filterParams){
 
@@ -80,7 +80,7 @@ export default function Events() {
             <h4>{event.title}</h4>
             <span>{event.date}</span>
             <p>{event.description}</p>
-            <button onClick={(e) => deleteHandler(e, event.id)}>Delete</button>
+            {resolvedEventsData.isLoggedIn === 'true' && <button onClick={(e) => deleteHandler(e, event.id)}>Delete</button>}
           </div>
         </Link>
       </li>
@@ -138,7 +138,7 @@ export default function Events() {
     <section className={style.container}>
       <h2>Events</h2>
       <Suspense fallback={<LoadingMessage postType='Events' />}>
-        <Await resolve={events}>
+        <Await resolve={eventsData}>
           {listEvents}
         </Await>
       </Suspense>

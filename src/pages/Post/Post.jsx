@@ -6,7 +6,7 @@ import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
 
 export default function Post() {
 
-    const { post } = useRouteLoaderData('post')
+    const { postData } = useRouteLoaderData('post')
 
     const [ searchParams ] = useSearchParams()
 
@@ -28,7 +28,7 @@ export default function Post() {
 
     const renderPost = (resolvedPost) => {
 
-      const post = resolvedPost
+      const { post, isLoggedIn } = resolvedPost
   
       const deleteHandler = (postId) => {
         navigate(`/posts/${postId}?modal=consent`, { state: { type: 'posts', id: postId } }) // Take Consent by opening a consent modal
@@ -43,7 +43,7 @@ export default function Post() {
           </div>
           <div className={`${style['sub-container']} ${style['btn-box']}`}>
             <Link to={redirectPath ? redirectPath : `..${redirectTo}`}>Back</Link>
-            <a onClick={() =>deleteHandler(post.id)}>Delete</a>
+            {isLoggedIn === 'true' && <a onClick={() =>deleteHandler(post.id)}>Delete</a>}
             <Link to='edit'>Edit</Link>
           </div>
           {modal && <ConsentModal message='Are you sure?' />}  {/************** modal is visible only if modal has a value  **********/}
@@ -56,8 +56,8 @@ export default function Post() {
   return (
     <section className={style.container}>
       <Suspense fallback={<LoadingMessage postType='Post'/>}>
-        <Await resolve={post}>
-          {resolvedPost => renderPost(resolvedPost)}
+        <Await resolve={postData}>
+          {renderPost}
         </Await>
       </Suspense>
     </section>

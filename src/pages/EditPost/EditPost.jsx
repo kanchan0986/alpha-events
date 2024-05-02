@@ -6,7 +6,7 @@ import style from './EditPost.module.css'
 
 export default function EditPost() {
 
-    const { post } = useRouteLoaderData('post')
+    const { postData } = useRouteLoaderData('post')
     
     const [ searchParams ] = useSearchParams()
   
@@ -14,12 +14,13 @@ export default function EditPost() {
 
   return (
     <section className={style.container}>
-      <Await resolve={post}>{/**********Resolved the promise got from the loader********/}
+      <Await resolve={postData}>{/**********Resolved the promise got from the loader********/}
         {resolvedPost => {
+          const { post } = resolvedPost
           return (
             <>
-              <h2>Edit {resolvedPost.title}</h2>
-              <PostForm existingPost={resolvedPost} method='PUT' />
+              <h2>Edit {post.title}</h2>
+              <PostForm existingPost={post} method='PUT' />
               {modal && <SuccessModal message='Post Modified' redirect='..' />}  {/************** modal is visible only if modal has a value  **********/}
             </>
           )

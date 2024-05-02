@@ -6,7 +6,7 @@ import SuccessModal from '../../components/modals/SuccessModal/SuccessModal'
 
 export default function EditEvent() {
 
-  const { event } = useRouteLoaderData('event')
+  const { eventData } = useRouteLoaderData('event')
 
   const [ searchParams ] = useSearchParams()
 
@@ -14,12 +14,13 @@ export default function EditEvent() {
 
   return (
     <section className={style.container}>
-      <Await resolve={event}>{/**********Resolved the promise got from the loader********/}
+      <Await resolve={eventData}>{/**********Resolved the promise got from the loader********/}
         {resolvedEvent => {
+          const { event } = resolvedEvent
           return (
             <>
-              <h2>Edit {resolvedEvent.title}</h2>
-              <EventForm existingEvent={resolvedEvent} method='patch' />
+              <h2>Edit {event.title}</h2>
+              <EventForm existingEvent={event} method='patch' />
               {modal && <SuccessModal message='Event Modified' redirect='..' />}  {/************** modal is visible only if modal has a value  **********/}
             </>
           )

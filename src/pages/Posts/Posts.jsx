@@ -12,7 +12,7 @@ export default function Posts() {
 
   const [ searchKeyword, setSearchKeyword ] = useState('')
 
-  const { posts } = useLoaderData()
+  const { postsData } = useLoaderData()
 
   const [ searchParams ] = useSearchParams()
 
@@ -28,7 +28,7 @@ export default function Posts() {
   const redirectedKey = searchParams.get('keyword')  // getting back the search keyword
   
   const keyUpHandler = (searchKey) => {
-    const searchValue = resolvedPostsData.filter(post => post.title.toLowerCase().includes(searchKey.toLowerCase()))
+    const searchValue = resolvedPostsData.posts.filter(post => post.title.toLowerCase().includes(searchKey.toLowerCase()))
     setSearchData(searchValue)
     setSearchKeyword(searchKey) // setting search keyword to access it back from searchParams when any redirection occurs like pressing back button or delet post
    }
@@ -41,7 +41,7 @@ export default function Posts() {
 
  let filterData, alteredData
 
- searchData.length > 0 ? alteredData = searchData : alteredData = resolvedPostsData
+ searchData.length > 0 ? alteredData = searchData : alteredData = resolvedPostsData.posts
 
  if(filterParam){
 
@@ -83,7 +83,7 @@ export default function Posts() {
               <h4>{post.title}</h4>
               <p>{post.body}</p>
             </div>
-            <button onClick={(e) => deleteHandler(e, post.id)}>Delete</button>
+            {resolvedPostsData.isLoggedIn === 'true' && <button onClick={(e) => deleteHandler(e, post.id)}>Delete</button>}
           </div>
         </Link>
       </li>
@@ -147,8 +147,8 @@ export default function Posts() {
     <section className={style.container}>
       <h2>Posts</h2>
       <Suspense fallback={<LoadingMessage postType='Posts' />}>
-        <Await resolve={posts}>
-          {resolvedPostsData => listPosts(resolvedPostsData)}
+        <Await resolve={postsData}>
+          {listPosts}
         </Await>
       </Suspense>
 

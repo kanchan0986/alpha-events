@@ -6,7 +6,7 @@ import ConsentModal from '../../components/modals/ConsentModal/ConsentModal'
 
 export default function Event() {
 
-    const { event } = useRouteLoaderData('event')
+    const { eventData } = useRouteLoaderData('event')
 
     const [ searchParams ] = useSearchParams()
 
@@ -28,7 +28,7 @@ export default function Event() {
 
     const renderEvent = (resolvedEvent) => { 
   
-      const event = resolvedEvent
+      const { event, isLoggedIn } = resolvedEvent
   
       const deleteHandler = (eventId) => { 
         navigate(`/events/${eventId}?modal=consent`, { state: { type: 'events', id: eventId } }) // Take Consent by opening a consent modal
@@ -49,7 +49,7 @@ export default function Event() {
           </div>
           <div className={`${style['sub-container']} ${style['btn-box']}`}>
             <Link to={redirectPath ? redirectPath : `..${redirectTo}`}>Back</Link>
-            <a onClick={() => deleteHandler(event.id)}>Delete</a>
+            {isLoggedIn === 'true' && <a onClick={() => deleteHandler(event.id)}>Delete</a>}
             <Link to='edit'>Edit</Link>
           </div>
           {modal && <ConsentModal message='Are you sure?' />}  {/************** modal is visible only if modal has a value  **********/}
@@ -63,8 +63,8 @@ export default function Event() {
   return (
     <section className={style.container}>
       <Suspense fallback={<LoadingMessage postType='Event' />} >
-        <Await resolve={event}>
-          {resolvedEvent => renderEvent(resolvedEvent)}
+        <Await resolve={eventData}>
+          {renderEvent}
         </Await>
       </Suspense>
     </section>
