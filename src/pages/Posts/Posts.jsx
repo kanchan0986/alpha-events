@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from 'react'
-import { useLoaderData, Link, useSearchParams, Await, useNavigate } from 'react-router-dom'
+import { useLoaderData, Link, useSearchParams, Await, useNavigate, useLocation } from 'react-router-dom'
 import style from './Posts.module.css'
 import SearchForm from '../../components/SearchForm/SearchForm'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
@@ -19,6 +19,10 @@ export default function Posts() {
   const navigate = useNavigate()
 
   const modal = searchParams?.get('modal') || null
+
+  const pathName = useLocation().pathname // getting the location pathname which is being protected
+
+  const redirectionPath = pathName ? `&redirect=${pathName}` : '' // setting the pathname as a queryParams to redirect the user to the protected path when he logs in or signs in
 
 
   const listPosts = (resolvedPostsData) => {    // Awaiting function to create listing component by getting the resolved data from the Await component's children 
@@ -69,7 +73,11 @@ export default function Posts() {
 
  const deleteHandler = (e, postId) => {
   e.preventDefault()
-  navigate('/posts?modal=consent', { state: { type: 'posts', id: postId } }) // Take Consent by opening a consent modal
+  if(resolvedPostsData.isLoggedIn === 'true'){
+    navigate('/posts?modal=consent', { state: { type: 'posts', id: postId } }) // Take Consent by opening a consent modal
+  }else{
+    navigate(`/login?state=signup${redirectionPath}`) // show signup page and send the redirection link as when the user logs in then he will be redirected to this page
+  }
 }
 
 
@@ -83,7 +91,7 @@ export default function Posts() {
               <h4>{post.title}</h4>
               <p>{post.body}</p>
             </div>
-            {resolvedPostsData.isLoggedIn === 'true' && <button onClick={(e) => deleteHandler(e, post.id)}>Delete</button>}
+            <button onClick={(e) => deleteHandler(e, post.id)}>Delete</button>
           </div>
         </Link>
       </li>

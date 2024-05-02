@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from 'react'
 import style from './Home.module.css'
 import RegisterForm from '../../components/RegisterForm/RegisterForm'
-import { Await, Link, useLoaderData, useNavigate, useSearchParams } from 'react-router-dom'
+import { Await, Link, useLoaderData, useNavigate, useSearchParams, useLocation } from 'react-router-dom'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
 import useCustomContext from '../../hooks/useCustomContext'
 import SuccessModal from '../../components/modals/SuccessModal/SuccessModal'
@@ -18,6 +18,10 @@ export default function Home() {
   const modal = searchParams?.get('modal') || null
 
   const navigate = useNavigate()
+
+  const pathName = useLocation().pathname // getting the location pathname which is being protected
+
+  const redirectionPath = pathName ? `&redirect=${pathName}` : '' // setting the pathname as a queryParams to redirect the user to the protected path when he logs in or signs in
 
 
   /* -------------------------- Combined Search Logic ------------------------- */
@@ -51,7 +55,11 @@ export default function Home() {
     
     const eventDeleteHandler = (e, eventId) => {
         e.preventDefault()
+        if(isLoggedIn === 'true'){
         navigate('/?modal=consent', { state: { type: 'events', id: eventId, pathName: '/' } }) // Take Consent by opening a consent modal
+        }else{
+          navigate(`/login?state=signup${redirectionPath}`) // show signup page and send the redirection link as when the user logs in then he will be redirected to this page
+        }
     }
 
 
@@ -64,7 +72,7 @@ export default function Home() {
               <h4>{event.title}</h4>
               <span>{event.date}</span>
               <p>{event.description}</p>
-              {isLoggedIn === 'true' && <button onClick={(e) => eventDeleteHandler(e, event.id)}>Delete</button>}
+              <button onClick={(e) => eventDeleteHandler(e, event.id)}>Delete</button>
             </div>
           </Link>
         </li>
@@ -98,7 +106,11 @@ export default function Home() {
 
     const postDeleteHandler = (e, postId) => {
         e.preventDefault()
+        if(isLoggedIn === 'true'){
         navigate('/?modal=consent', { state: { type: 'posts', id: postId, pathName: '/' } }) // Take Consent by opening a consent modal
+        }else{
+          navigate(`/login?state=signup${redirectionPath}`) // show signup page and send the redirection link as when the user logs in then he will be redirected to this page
+        }
     }
 
 
@@ -111,7 +123,7 @@ export default function Home() {
                 <h4>{post.title}</h4>
                 <p>{post.body}</p>
               </div>
-              {isLoggedIn === 'true' && <button onClick={(e) => postDeleteHandler(e, post.id)}>Delete</button>}
+              <button onClick={(e) => postDeleteHandler(e, post.id)}>Delete</button>
             </div>
           </Link>
         </li>

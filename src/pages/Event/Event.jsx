@@ -24,6 +24,10 @@ export default function Event() {
 
     const redirectTo = `${redirect}${searchKeyword && `&keyword=${searchKeyword}`}`  // if search keyword exists attach it with the query params
 
+    const pathName = location.pathname // getting the location pathname which is being protected
+
+    const redirectionPath = pathName ? `&redirect=${pathName}` : '' // setting the pathname as a queryParams to redirect the user to the protected path when he logs in or signs in
+
 
 
     const renderEvent = (resolvedEvent) => { 
@@ -31,7 +35,11 @@ export default function Event() {
       const { event, isLoggedIn } = resolvedEvent
   
       const deleteHandler = (eventId) => { 
+        if(isLoggedIn === 'true'){
         navigate(`/events/${eventId}?modal=consent`, { state: { type: 'events', id: eventId } }) // Take Consent by opening a consent modal
+        }else{
+          navigate(`/login?state=signup${redirectionPath}`) // show signup page and send the redirection link as when the user logs in then he will be redirected to this page
+        }
        }
 
       return (
@@ -49,7 +57,7 @@ export default function Event() {
           </div>
           <div className={`${style['sub-container']} ${style['btn-box']}`}>
             <Link to={redirectPath ? redirectPath : `..${redirectTo}`}>Back</Link>
-            {isLoggedIn === 'true' && <a onClick={() => deleteHandler(event.id)}>Delete</a>}
+            <a onClick={() => deleteHandler(event.id)}>Delete</a>
             <Link to='edit'>Edit</Link>
           </div>
           {modal && <ConsentModal message='Are you sure?' />}  {/************** modal is visible only if modal has a value  **********/}

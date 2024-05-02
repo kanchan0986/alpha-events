@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from 'react'
-import { Await, Link, useLoaderData, useNavigate, useSearchParams } from 'react-router-dom'
+import { Await, Link, useLoaderData, useNavigate, useSearchParams, useLocation } from 'react-router-dom'
 import style from './Events.module.css'
 import SearchForm from '../../components/SearchForm/SearchForm'
 import LoadingMessage from '../../components/LoadingMessage/LoadingMessage'
@@ -19,6 +19,10 @@ export default function Events() {
   const navigate = useNavigate()
 
   const modal = searchParams?.get('modal') || null
+
+  const pathName = useLocation().pathname // getting the location pathname which is being protected
+
+  const redirectionPath = pathName ? `&redirect=${pathName}` : '' // setting the pathname as a queryParams to redirect the user to the protected path when he logs in or signs in
 
 
   const listEvents = (resolvedEventsData) => {    // Awaiting function to create listing component by getting the resolved data from the Await component's children
@@ -68,7 +72,11 @@ export default function Events() {
 
   const deleteHandler = (e, eventId) => {
     e.preventDefault()
-    navigate('/events?modal=consent', { state: { type: 'events', id: eventId } }) // Take Consent by opening a consent modal
+    if(resolvedEventsData.isLoggedIn === 'true'){
+      navigate('/events?modal=consent', { state: { type: 'events', id: eventId } }) // Take Consent by opening a consent modal
+    }else{
+      navigate(`/login?state=signup${redirectionPath}`) // show signup page and send the redirection link as when the user logs in then he will be redirected to this page
+    }
  }
 
   const eventsList = filterData.map(event => {
@@ -80,7 +88,7 @@ export default function Events() {
             <h4>{event.title}</h4>
             <span>{event.date}</span>
             <p>{event.description}</p>
-            {resolvedEventsData.isLoggedIn === 'true' && <button onClick={(e) => deleteHandler(e, event.id)}>Delete</button>}
+            <button onClick={(e) => deleteHandler(e, event.id)}>Delete</button>
           </div>
         </Link>
       </li>
