@@ -1,4 +1,5 @@
 import { defer, json } from "react-router-dom"
+import { loginState } from "./helper"
 
 /* -------------------------------------------------------------------------- */
 /*                               Events Loaders                               */
@@ -10,12 +11,13 @@ export const fetchEvents = async () => {
         throw json(null, {status: 500, statusText: 'Unable to load Events!'})
     }
     const responseData = await response.json()
-    return responseData.events
+    const isLoggedIn = loginState()
+    return { events: responseData.events, isLoggedIn: isLoggedIn}
 }
 
 export const loadEvents = () => {
     return defer({
-        events: fetchEvents()
+        eventsData: fetchEvents()
     })
 }
 
@@ -32,13 +34,14 @@ export const fetchEvent = async ( params ) => {
         throw json(null, {status: 500, statusText: 'Unable to load Event!'})
     }
     const responseData = await response.json()
-    return responseData.event
+    const isLoggedIn = loginState()
+    return { event: responseData.event, isLoggedIn: isLoggedIn}
 }
 
 
 export const loadEvent = ({ params }) => {
     return defer({
-        event: fetchEvent(params)
+        eventData: fetchEvent(params)
     })
 }
 
@@ -52,12 +55,13 @@ export const fetchPosts = async () => {
         throw json(null, {status: 500, statusText: 'Unable to load Posts!'})
     }
     const responseData = await response.json()
-    return responseData
+    const isLoggedIn = loginState()
+    return {posts: responseData, isLoggedIn: isLoggedIn}
 }
 
 export const loadPosts = () => {
     return defer({
-        posts: fetchPosts()
+        postsData: fetchPosts()
     })
 }
 
@@ -74,12 +78,13 @@ export const fetchPost = async ( params ) => {
         throw json(null, {status: 500, statusText: 'Unable to load Post!'})
     }
     const responseData = await response.json()
-    return responseData
+    const isLoggedIn = loginState()
+    return {post: responseData, isLoggedIn: isLoggedIn}
 }
 
 export const loadPost = ({ params }) => {
     return defer({
-        post: fetchPost(params)
+        postData: fetchPost(params)
     })
 }
 
@@ -92,8 +97,8 @@ export const loadPost = ({ params }) => {
 export const loadHomepage = () => {
 
     return defer({
-        events: fetchEvents(),
-        posts: fetchPosts()
+        eventsData: fetchEvents(),
+        postsData: fetchPosts()
     })
 }
 
@@ -104,7 +109,7 @@ export const loadHomepage = () => {
 
 
 export const loadRoot = () => {
-    return localStorage.getItem('isLoggedIn')
+    return loginState()
 }
 
 
