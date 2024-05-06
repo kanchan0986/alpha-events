@@ -1,17 +1,19 @@
 import React from 'react'
 import style from './PrimaryHeader.module.css'
 import RegisterForm from '../../RegisterForm/RegisterForm'
-import { Form, Link, NavLink, useRouteLoaderData, useSubmit } from 'react-router-dom'
+import { Form, Link, NavLink, useLocation, useRouteLoaderData, useSubmit } from 'react-router-dom'
 import CombinedSearch from '../../CombinedSearch/CombinedSearch'
 
 export default function PrimaryHeader() {
 
   const isLoggedIn = useRouteLoaderData('root')
 
+  const location = useLocation()
+
   const submit = useSubmit()
 
   const logoutHandler = () => { 
-      submit(null, { method: 'post', action: '/logout', replace: true })
+      submit({pathname: location.pathname}, { method: 'post', action: '/logout', replace: true }) // logout but stay on that page
    }
 
   return (

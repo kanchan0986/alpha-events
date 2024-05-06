@@ -212,7 +212,9 @@ export const loginAction = async ({request}) => {
 /* -------------------------------------------------------------------------- */
 
 
-export const logoutAction = async () => {
+export const logoutAction = async ({request}) => {
+    const formData = await request.formData()
+    const pathname = formData.get('pathname')
     localStorage.removeItem('token')
-    return redirect('/')
+    return redirect(pathname ? pathname : '/')
 }
