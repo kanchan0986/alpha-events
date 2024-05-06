@@ -73,7 +73,7 @@ export default function Posts() {
 
  const deleteHandler = (e, postId) => {
   e.preventDefault()
-  if(resolvedPostsData.isLoggedIn === 'true'){
+  if(resolvedPostsData.isLoggedIn){
     navigate('/posts?modal=consent', { state: { type: 'posts', id: postId } }) // Take Consent by opening a consent modal
   }else{
     navigate(`/login?state=signup${redirectionPath}`) // show signup page and send the redirection link as when the user logs in then he will be redirected to this page

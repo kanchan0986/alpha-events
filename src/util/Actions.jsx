@@ -1,4 +1,5 @@
 import { redirect } from "react-router-dom"
+import { authenticateUser, loginState } from "./helper"
 
 /* -------------------------------------------------------------------------- */
 /*                     Event creation and updation Action                     */
@@ -23,11 +24,14 @@ export const modifyEventAction = async ({request, params}) => {
         url = url + params.id
     }
 
+    const token = loginState()
+
     const response = await fetch(url, {
         method,
         body: JSON.stringify(event),
-        headers: {
-            'Content-Type': 'application/json'
+        headers: { // Authorization property in headers needed by backend
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
         }
     })
 
@@ -55,8 +59,13 @@ export const modifyEventAction = async ({request, params}) => {
 export const deleteEvent = async ({request, params}) => {
     const id = params.id
     const pathName = new URL(request.url).searchParams.get('pathname')
+    const token = loginState()
     const response = await fetch(`http://localhost:8080/events/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { // Authorization property in headers needed by backend
+            'Authorization': `Bearer ${token}`
+        }
+
     })
     if(!response.ok){
         // 
@@ -168,20 +177,31 @@ export const loginAction = async ({request}) => {
     const formData = await request.formData()
     const url = new URL(request.url)
     const redirectionPath = url.searchParams.get('redirect')
+    const loginState = url.searchParams.get('state')
     
     const loginData = {
         email: formData.get('email'),
         password: formData.get('password')
     }
 
-    if(loginData.email.trim() !== '' && loginData.password.trim() !== '' && redirectionPath){
-        localStorage.setItem('isLoggedIn', 'true')
-        return redirect(redirectionPath)
-    }else if(loginData.email.trim() !== '' && loginData.password.trim() !== ''){
-        localStorage.setItem('isLoggedIn', 'true')
-        return redirect('/')
+    let authResponse
+
+    if(redirectionPath){
+        authResponse = await authenticateUser({ loginData, loginState })
+        if(authResponse.token){ // if token is recieved from the backend -> set token
+            localStorage.setItem('token', authResponse.token)
+            return redirect(redirectionPath)
+        }else{
+            return authResponse // else return response from the backend
+        }
     }else{
-        return null
+        authResponse = await authenticateUser({ loginData, loginState })
+        if(authResponse.token){ // if token is recieved from the backend -> set token
+            localStorage.setItem('token', authResponse.token)
+            return redirect('/')
+        }else{
+            return authResponse // else return response from the backend
+        }
     }
 }
 
@@ -193,6 +213,6 @@ export const loginAction = async ({request}) => {
 
 
 export const logoutAction = async () => {
-    localStorage.removeItem('isLoggedIn')
+    localStorage.removeItem('token')
     return redirect('/')
 }

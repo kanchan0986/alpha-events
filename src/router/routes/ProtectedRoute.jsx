@@ -11,7 +11,7 @@ export default function ProtectedRoute({ children }) {
 
   return (
     <>
-    {isLoggedIn === 'true' ? children : <Navigate to={`/login?state=signup${redirect}`} /> }
+    {isLoggedIn ? children : <Navigate to={`/login?state=signup${redirect}`} /> } {/* if logged in then render any children within this component else redirect to signup page */}
     </>
   )
 }

@@ -40,8 +40,8 @@ export default function PrimaryHeader() {
         </ul>
       </div>
       <div className={`${style['sub-container']} ${style.last}`}>
-        {isLoggedIn !== 'true' && <NavLink to='login?state=signup' className={({isActive}) => isActive ? style.active : ''}>Login</NavLink>}
-        {isLoggedIn === 'true' && <button onClick={logoutHandler} className={style.logout}>Logout</button>}
+        {!isLoggedIn && <NavLink to='login?state=signup' className={({isActive}) => isActive ? style.active : ''}>Login</NavLink>}
+        {isLoggedIn && <button onClick={logoutHandler} className={style.logout}>Logout</button>}
         <RegisterForm />
       </div>
     </nav>

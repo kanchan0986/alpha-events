@@ -55,7 +55,7 @@ export default function Home() {
     
     const eventDeleteHandler = (e, eventId) => {
         e.preventDefault()
-        if(isLoggedIn === 'true'){
+        if(isLoggedIn){
         navigate('/?modal=consent', { state: { type: 'events', id: eventId, pathName: '/' } }) // Take Consent by opening a consent modal
         }else{
           navigate(`/login?state=signup${redirectionPath}`) // show signup page and send the redirection link as when the user logs in then he will be redirected to this page
@@ -106,7 +106,7 @@ export default function Home() {
 
     const postDeleteHandler = (e, postId) => {
         e.preventDefault()
-        if(isLoggedIn === 'true'){
+        if(isLoggedIn){
         navigate('/?modal=consent', { state: { type: 'posts', id: postId, pathName: '/' } }) // Take Consent by opening a consent modal
         }else{
           navigate(`/login?state=signup${redirectionPath}`) // show signup page and send the redirection link as when the user logs in then he will be redirected to this page

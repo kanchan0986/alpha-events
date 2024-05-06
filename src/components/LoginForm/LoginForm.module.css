@@ -47,3 +47,15 @@
     background: steelblue;
     color: white;
 }
+
+.error-message h3 {
+    text-align: center;
+    color: red;
+}
+
+.error-input span {
+    display: block;
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}

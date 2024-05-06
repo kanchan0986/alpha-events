@@ -72,7 +72,7 @@ export default function Events() {
 
   const deleteHandler = (e, eventId) => {
     e.preventDefault()
-    if(resolvedEventsData.isLoggedIn === 'true'){
+    if(resolvedEventsData.isLoggedIn){
       navigate('/events?modal=consent', { state: { type: 'events', id: eventId } }) // Take Consent by opening a consent modal
     }else{
       navigate(`/login?state=signup${redirectionPath}`) // show signup page and send the redirection link as when the user logs in then he will be redirected to this page
