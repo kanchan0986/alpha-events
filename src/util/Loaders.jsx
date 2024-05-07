@@ -109,7 +109,13 @@ export const loadHomepage = () => {
 
 
 export const loadRoot = () => {
-    return loginState()
+    const token = loginState()
+
+    if(!token){  // if token does not exists -> return nothing
+        return null
+    }
+    
+    return token  // if token exists -> return token
 }
 
 

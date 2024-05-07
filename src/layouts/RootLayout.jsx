@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Outlet, useLoaderData, useSubmit } from 'react-router-dom'
 import PrimaryHeader from '../components/headers/PrimaryHeader/PrimaryHeader'
 import PrimaryFooter from '../components/footers/PrimaryFooter/PrimaryFooter'
+import { tokenEpiration } from '../util/helper'
 
 export default function RootLayout() {
 
@@ -15,15 +16,17 @@ export default function RootLayout() {
       return
     }
 
-    const timer = setTimeout(() => { // if token exists -> logout after set time
+    const remainingExpirationTime = tokenEpiration()
+
+    const logoutTimer = setTimeout(() => { // if token exists -> logout after token expires
       submit(null, {method: 'post', action: '/logout', replace: true})
-    }, 60 * 1000); // 60 sec * 1000 micro sec
+    }, remainingExpirationTime);
     
     return () => {
       if(!token){ // if token does not exists -> quit
         return
       }
-      clearTimeout(timer) // if token exists -> else clear the set timer
+      clearTimeout(logoutTimer) // if token exists -> else clear the set timer
     }
 
   }, [token])

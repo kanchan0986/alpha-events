@@ -1,5 +1,5 @@
 import { redirect } from "react-router-dom"
-import { authenticateUser, loginState } from "./helper"
+import { authenticateUser, loginState, tokenStorage } from "./helper"
 
 /* -------------------------------------------------------------------------- */
 /*                     Event creation and updation Action                     */
@@ -189,7 +189,7 @@ export const loginAction = async ({request}) => {
     if(redirectionPath){
         authResponse = await authenticateUser({ loginData, loginState })
         if(authResponse.token){ // if token is recieved from the backend -> set token
-            localStorage.setItem('token', authResponse.token)
+            tokenStorage(authResponse.token)
             return redirect(redirectionPath)
         }else{
             return authResponse // else return response from the backend
@@ -197,7 +197,7 @@ export const loginAction = async ({request}) => {
     }else{
         authResponse = await authenticateUser({ loginData, loginState })
         if(authResponse.token){ // if token is recieved from the backend -> set token
-            localStorage.setItem('token', authResponse.token)
+            tokenStorage(authResponse.token)
             return redirect('/')
         }else{
             return authResponse // else return response from the backend
@@ -216,5 +216,6 @@ export const logoutAction = async ({request}) => {
     const formData = await request.formData()
     const pathname = formData.get('pathname')
     localStorage.removeItem('token')
-    return redirect(pathname ? pathname : '/')
+    localStorage.removeItem('expiration')
+    return redirect(pathname ? pathname : '/') // for manual logout -> stay on same page and for auto logout redirect to root path
 }

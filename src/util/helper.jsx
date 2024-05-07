@@ -1,3 +1,11 @@
+export const tokenEpiration = () => {
+    const expiration = localStorage.getItem('expiration')
+    const expirationDate = new Date(expiration).getTime()
+    const currentDate = new Date().getTime()
+    const remainingExpTime = expirationDate - currentDate
+    return remainingExpTime
+}
+
 export const loginState = () => {
     return localStorage.getItem('token')
 }
@@ -14,4 +22,11 @@ export const authenticateUser = async ({ loginData, loginState }) => {
         return request
     }    
     return await request.json()
+}
+
+export const tokenStorage = ( token ) => {
+    localStorage.setItem('token', token)
+    const expiration = new Date()
+    expiration.setSeconds(expiration.getSeconds() + 60)
+    localStorage.setItem('expiration', expiration.toISOString())
 }
